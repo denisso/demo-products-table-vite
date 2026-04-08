@@ -1,1 +1,1 @@
-export { addToast, useToastStore, removeToast, type ToastProps } from './toast';
+export { useToastStore, type ToastProps, toastApi } from './toast';

@@ -1,0 +1,22 @@
+import { create } from 'zustand';
+
+interface TokenState {
+  token: string | null;
+  setToken: (token: string) => void;
+  clearToken: () => void;
+}
+
+export const useTokenStore = create<TokenState>()((set) => ({
+  token: null,
+  setToken: (token) => {
+    set({ token });
+  },
+  clearToken: () => {
+    set({ token: null });
+  },
+}));
+
+export const tokenApi = {
+  setToken: (token: string) => useTokenStore.getState().setToken(token),
+  clearToken: () => useTokenStore.getState().clearToken(),
+};

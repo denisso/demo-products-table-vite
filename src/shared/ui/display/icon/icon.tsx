@@ -23,14 +23,11 @@ export const Icon = ({
 
   if (width === 'auto' || height === 'auto') {
     return (
-      <img
-        src={_src}
-        alt={alt ?? ''}
-        style={{ width, height }}
-        {...rest}
-      />
+      <img src={_src} alt={alt ?? ''} style={{ width, height }} {...rest} />
     );
   }
 
-  return <img src={_src} alt={alt ?? ''} width={width} height={height} {...rest} />;
+  return (
+    <img src={_src} alt={alt ?? ''} width={width} height={height} {...rest} />
+  );
 };

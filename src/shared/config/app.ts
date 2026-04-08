@@ -6,4 +6,6 @@ export const APP_CONFIG = {
   DEBOUNCE_SEARCH: 300,
   // время ожидания любого запроса данных с сервера в мс
   REQUEST_TIMEOUT: 10000,
+
+  ACCESS_TOKEN_NAME_IN_STORAGE: 'access-token',
 } as const;

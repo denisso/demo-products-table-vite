@@ -1,4 +1,4 @@
-import { removeToast, type ToastProps } from '@/shared/lib/toast';
+import { useToastStore, type ToastProps } from '@/shared/lib/toast';
 import { type ToastColor } from '@/shared/types/color';
 import clsx from 'clsx';
 
@@ -21,7 +21,7 @@ export const Toast = ({ toast }: Props) => {
 
       <button
         className='btn btn-sm btn-ghost'
-        onClick={() => removeToast(toast.id)}
+        onClick={() => useToastStore.getState().removeToast(toast.id)}
       >
         ✕
       </button>

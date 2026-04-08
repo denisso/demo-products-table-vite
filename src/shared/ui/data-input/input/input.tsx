@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import clsx from 'clsx';
 import { type Color } from '../../../types/color';
@@ -113,7 +112,7 @@ export const LoginInput = React.forwardRef<
       type='text'
       placeholder={placeholder || 'Логин'}
       color={color}
-       ref={inputRef}
+      ref={inputRef}
       {...rest}
       rightIcon={
         <Icon

@@ -1,4 +1,4 @@
-'use client';
+import React from 'react';
 import clsx from 'clsx';
 import { type Color } from '../../../types/color';
 
@@ -13,7 +13,10 @@ type Props = {
   color?: Color;
 } & React.ComponentProps<'input'>;
 
-export function Checkbox({ className, color, ...rest }: Props) {
+export const Checkbox = React.forwardRef<
+  HTMLInputElement,
+  Props & React.ComponentProps<'input'>
+>(({ className, color, ...rest }, ref) => {
   const colorClass = color ? colorMap[color] : colorMap['neutral'];
 
   return (
@@ -24,7 +27,10 @@ export function Checkbox({ className, color, ...rest }: Props) {
         colorClass,
         className,
       )}
+      ref={ref}
       {...rest}
     />
   );
-}
+});
+
+Checkbox.displayName = 'Checkbox';

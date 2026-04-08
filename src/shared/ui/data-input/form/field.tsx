@@ -47,7 +47,7 @@ export function FormField<TFormData extends FieldValues>({
     onBlur,
   } = register(name, validationRules);
 
-  const _onChange = (event: React.ChangeEvent<HTMLElement>) => {
+  const _onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     _onChangeReg(event);
     if (typeof onChange == 'function') {
       onChange(event);
