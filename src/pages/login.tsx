@@ -1,4 +1,4 @@
-import { LoginForm } from '@/widgets';
+import { LoginForm } from '@/features/auth';
 import { Container } from '@/shared/ui';
 
 export const LoginPage = () => {

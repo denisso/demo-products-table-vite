@@ -1,9 +1,8 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useIsMutating } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { tokenApi } from '@/shared/lib/token';
 import { userApi } from '@/entities/user';
 import { loginRequest, FetchError, type LoginResponse } from '@/shared/api';
-import { useAuthStore } from '@/features/auth/model/auth';
 import { APP_CONFIG } from '@/shared/config';
 
 interface LoginVariables {
@@ -12,13 +11,13 @@ interface LoginVariables {
   remember: boolean;
 }
 
+const mutationKey = ['auth'];
+
 export const useLogin = () => {
-  // без этого нет синхронизации использования useLogin в разных компонентах
-  const { isPending, error, setStateAuth } = useAuthStore();
   const navigate = useNavigate();
   const mutation = useMutation<LoginResponse, FetchError, LoginVariables>({
+    mutationKey,
     mutationFn: ({ username, password }) => {
-      setStateAuth(true, null);
       return loginRequest(username, password);
     },
     onSuccess: (response, variables) => {
@@ -34,9 +33,12 @@ export const useLogin = () => {
       }
       navigate('/');
     },
-    onSettled: (_, error) => {
-      setStateAuth(false, error);
-    },
   });
-  return { error, mutate: mutation.mutate, isPending };
+  const countMutations = useIsMutating({ mutationKey });
+
+  return {
+    mutate: mutation.mutate,
+    isPending: countMutations > 0,
+    error: mutation.error,
+  };
 };

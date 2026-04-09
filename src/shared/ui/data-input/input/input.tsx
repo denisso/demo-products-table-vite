@@ -1,7 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
-import { type Color } from '../../../types/color';
+import { type Color } from '@/shared/types/color';
 import { Icon } from '../../display';
+import { ICONS_CONFIG } from '@/shared/config';
 
 const DEFAULT_WIDTH = 24;
 
@@ -18,7 +19,6 @@ type Props = {
   color?: Color;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  className?: string;
 };
 
 const Input = React.forwardRef<
@@ -47,7 +47,7 @@ const Input = React.forwardRef<
           className={clsx('grow', className)}
           placeholder={placeholder}
           ref={ref}
-          autoComplete={autoComplete ? 'on' : 'off'}
+          autoComplete={autoComplete ? autoComplete : 'off'}
           {...rest}
         />
         {rightIcon}
@@ -58,39 +58,23 @@ const Input = React.forwardRef<
 
 Input.displayName = 'Input';
 
-type InputRef = Omit<React.ComponentProps<'input'>, 'ref' | 'type'>;
+type InputPropsShared = Omit<React.ComponentProps<'input'>, 'ref' | 'type'>;
 
-export const SearchInput = React.forwardRef<
-  HTMLInputElement,
-  Pick<Props, 'color'> & InputRef
->(({ color, placeholder, ...rest }, ref) => (
-  <Input
-    leftIcon={
-      <Icon
-        filename='search'
-        alt='Поиск'
-        width={DEFAULT_WIDTH}
-        height={'auto'}
-        className='opacity-30'
-      />
-    }
-    type={'search'}
-    placeholder={placeholder || 'Найти'}
-    color={color}
-    ref={ref}
-    {...rest}
-  />
-));
-
-SearchInput.displayName = 'SearchInput';
-
-export const LoginInput = React.forwardRef<
-  HTMLInputElement,
-  Pick<Props, 'color'> & InputRef
->(({ color, placeholder, ...rest }, parentRef) => {
+const InputWithClearText = ({
+  color,
+  placeholder,
+  ref,
+  icon,
+  iconText,
+  ...rest
+}: Pick<Props, 'color'> &
+  InputPropsShared & { ref: React.ForwardedRef<HTMLInputElement> } & {
+    icon: keyof typeof ICONS_CONFIG;
+    iconText: string;
+  }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  React.useImperativeHandle(parentRef, () => inputRef.current!);
+  React.useImperativeHandle(ref, () => inputRef.current!);
 
   const handleClear = () => {
     if (inputRef.current) {
@@ -102,8 +86,8 @@ export const LoginInput = React.forwardRef<
     <Input
       leftIcon={
         <Icon
-          filename='login'
-          alt='Логин'
+          filename={icon}
+          alt={iconText}
           width={DEFAULT_WIDTH}
           height={'auto'}
           className='opacity-30'
@@ -126,14 +110,48 @@ export const LoginInput = React.forwardRef<
       }
     />
   );
+};
+
+export const SearchInput = React.forwardRef<
+  HTMLInputElement,
+  Pick<Props, 'color'> & InputPropsShared
+>(({ color, placeholder, ...rest }, ref) => {
+  return (
+    <InputWithClearText
+      ref={ref}
+      icon={'search'}
+      iconText='Поиск'
+      placeholder={placeholder ? placeholder : 'Поиск'}
+      color={color}
+      {...rest}
+    />
+  );
+});
+
+SearchInput.displayName = 'SearchInput';
+
+export const LoginInput = React.forwardRef<
+  HTMLInputElement,
+  Pick<Props, 'color'> & InputPropsShared
+>(({ color, placeholder, ...rest }, ref) => {
+  return (
+    <InputWithClearText
+      ref={ref}
+      icon={'login'}
+      iconText='Логин'
+      placeholder={placeholder ? placeholder : 'Логин'}
+      color={color}
+      {...rest}
+    />
+  );
 });
 
 LoginInput.displayName = 'LoginInput';
 
 export const PasswordInput = React.forwardRef<
   HTMLInputElement,
-  Pick<Props, 'color'> & InputRef
->(({ color, placeholder, ...rest }, ref) => {
+  Pick<Props, 'color'> & InputPropsShared
+>(({ color, placeholder, autoComplete, ...rest }, ref) => {
   const [hide, setHide] = React.useState(true);
   return (
     <Input
@@ -150,6 +168,7 @@ export const PasswordInput = React.forwardRef<
       placeholder={placeholder || 'Пароль'}
       color={color}
       ref={ref}
+      autoComplete={autoComplete ? autoComplete : 'new-password'}
       {...rest}
       rightIcon={
         <Icon
@@ -169,7 +188,7 @@ PasswordInput.displayName = 'PasswordInput';
 
 export const TextInput = React.forwardRef<
   HTMLInputElement,
-  Pick<Props, 'color' | 'placeholder'> & InputRef
+  Pick<Props, 'color' | 'placeholder'> & InputPropsShared
 >(({ color, placeholder, ...rest }, ref) => (
   <Input
     placeholder={placeholder}

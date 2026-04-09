@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@/shared/ui/data-input';
+import { Button } from '@/shared/ui';
 
 export const ProductsPage = () => {
   const navigate = useNavigate();

@@ -10,7 +10,7 @@ import {
 import { toastApi } from '@/shared/lib/toast';
 import { LoginFormHeader } from './header';
 import { useLogin } from '@/features/auth';
-import { LoginFormFooter } from '@/widgets/login-form/footer';
+import { LoginFormFooter } from './footer';
 
 interface LoginFormData {
   username: string;

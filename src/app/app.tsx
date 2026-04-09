@@ -2,7 +2,8 @@ import { ToastsContainer } from '../shared/ui/feedback';
 import { RouterProvider } from 'react-router-dom';
 import { router } from '@/app/router/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { TokenProvider } from './token';
+import { TokenProvider } from '../features/auth';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
