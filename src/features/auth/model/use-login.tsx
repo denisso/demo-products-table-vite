@@ -1,4 +1,4 @@
-import { useMutation, useIsMutating } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { tokenApi } from '@/shared/lib/token';
 import { userApi } from '@/entities/user';
@@ -11,12 +11,9 @@ interface LoginVariables {
   remember: boolean;
 }
 
-const mutationKey = ['auth'];
-
 export const useLogin = () => {
   const navigate = useNavigate();
   const mutation = useMutation<LoginResponse, FetchError, LoginVariables>({
-    mutationKey,
     mutationFn: ({ username, password }) => {
       return loginRequest(username, password);
     },
@@ -34,11 +31,6 @@ export const useLogin = () => {
       navigate('/');
     },
   });
-  const countMutations = useIsMutating({ mutationKey });
 
-  return {
-    mutate: mutation.mutate,
-    isPending: countMutations > 0,
-    error: mutation.error,
-  };
+  return mutation;
 };

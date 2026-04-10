@@ -1,2 +1,2 @@
 export { APP_CONFIG } from './app';
-export { ICONS_CONFIG } from './icons';
+export { ICON_PATH, ICON_CONFIG } from './icons';

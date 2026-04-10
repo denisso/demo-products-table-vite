@@ -1,14 +1,14 @@
-import { ICONS_CONFIG } from '@/shared/config';
+import { ICON_PATH } from '@/shared/config';
 
 type ProxyImageProps = Omit<
-  React.ImgHTMLAttributes<HTMLImageElement>,
+  React.ComponentProps<'img'>,
   'src' | 'alt' | 'height' | 'width'
 > & {
-  filename?: keyof typeof ICONS_CONFIG;
+  filename?: keyof typeof ICON_PATH;
   src?: string;
   alt?: string;
-  height: number | 'auto';
-  width: number | 'auto';
+  height: string | 'auto';
+  width: string | 'auto';
 };
 
 export const Icon = ({
@@ -19,7 +19,7 @@ export const Icon = ({
   height,
   ...rest
 }: ProxyImageProps) => {
-  const _src = src ? src : filename ? ICONS_CONFIG[filename] : '';
+  const _src = src ? src : filename ? ICON_PATH[filename] : '';
 
   if (width === 'auto' || height === 'auto') {
     return (

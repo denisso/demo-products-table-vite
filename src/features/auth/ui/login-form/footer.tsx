@@ -1,19 +1,18 @@
-import { Button, Link } from '@/shared/ui';
-import { useLogin } from '@/features/auth';
+import { LoadingButton, Link } from '@/shared/ui';
 
-export const LoginFormFooter = () => {
-  const m = useLogin();
 
+export const LoginFormFooter = ({isPending}:{isPending: boolean}) => {
   return (
     <div className='flex flex-col gap-4'>
-      <Button
+      <LoadingButton
+        loading={isPending}
         type='submit'
         color='primary'
         className='mt-6'
-        disabled={m.isPending}
+        disabled={isPending}
       >
-        {m.isPending ? 'Войти....' : 'Войти'}
-      </Button>
+        {isPending ? 'Вход....' : 'Войти'}
+      </LoadingButton>
       <div className='flex items-center'>
         <div className='grow h-px border-b border-neutral' />
         <span className='text-muted px-4'>или</span>

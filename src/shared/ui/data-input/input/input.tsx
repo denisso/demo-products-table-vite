@@ -2,9 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { type Color } from '@/shared/types/color';
 import { Icon } from '../../display';
-import { ICONS_CONFIG } from '@/shared/config';
-
-const DEFAULT_WIDTH = 24;
+import { ICON_PATH, ICON_CONFIG } from '@/shared/config';
 
 // классы которые будут сгенерированы
 const colorMap: Record<Color, string> = {
@@ -66,29 +64,47 @@ const InputWithClearText = ({
   ref,
   icon,
   iconText,
+  onChange,
   ...rest
 }: Pick<Props, 'color'> &
   InputPropsShared & { ref: React.ForwardedRef<HTMLInputElement> } & {
-    icon: keyof typeof ICONS_CONFIG;
+    icon: keyof typeof ICON_PATH;
     iconText: string;
   }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const [isShowClear, setIsShowClear] = React.useState(false);
 
   React.useImperativeHandle(ref, () => inputRef.current!);
+
+  const _onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (typeof onChange == 'function') {
+      onChange(event);
+    }
+    setIsShowClear(!!event.target.value);
+  };
 
   const handleClear = () => {
     if (inputRef.current) {
       inputRef.current.value = '';
-      inputRef.current.dispatchEvent(new Event('input', { bubbles: true }));
+
+      const syntheticEvent = {
+        target: inputRef.current,
+        currentTarget: inputRef.current,
+        type: 'change',
+        bubbles: true,
+      } as React.ChangeEvent<HTMLInputElement>;
+
+      _onChange(syntheticEvent);
     }
   };
+
   return (
     <Input
       leftIcon={
         <Icon
           filename={icon}
           alt={iconText}
-          width={DEFAULT_WIDTH}
+          width={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
           height={'auto'}
           className='opacity-30'
         />
@@ -97,16 +113,19 @@ const InputWithClearText = ({
       placeholder={placeholder || 'Логин'}
       color={color}
       ref={inputRef}
+      onChange={_onChange}
       {...rest}
       rightIcon={
-        <Icon
-          filename='close'
-          alt='Очистка текста'
-          width={DEFAULT_WIDTH}
-          height={'auto'}
-          className='cursor-pointer opacity-30'
-          onClick={handleClear}
-        />
+        isShowClear && (
+          <Icon
+            filename='close'
+            alt='Очистка текста'
+            width={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
+            height={'auto'}
+            className='cursor-pointer opacity-30'
+            onClick={handleClear}
+          />
+        )
       }
     />
   );
@@ -159,7 +178,7 @@ export const PasswordInput = React.forwardRef<
         <Icon
           filename='password'
           alt='Пароль'
-          width={DEFAULT_WIDTH}
+          width={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
           height={'auto'}
           className='opacity-30'
         />
@@ -174,7 +193,7 @@ export const PasswordInput = React.forwardRef<
         <Icon
           filename={hide ? 'eye-off' : 'eye'}
           alt='Пароль'
-          width={DEFAULT_WIDTH}
+          width={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
           height={'auto'}
           className='cursor-pointer opacity-30'
           onClick={() => setHide((prev) => !prev)}

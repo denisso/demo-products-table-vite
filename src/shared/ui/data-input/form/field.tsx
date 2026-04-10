@@ -4,16 +4,21 @@ import type {
   UseFormRegister,
   FieldError,
 } from 'react-hook-form';
+import clsx from 'clsx';
 import React from 'react';
 import type { Color } from '@/shared/types';
 
 interface FormFieldProps<TFormData extends FieldValues> {
   label: string;
+  isLabelMuted?: boolean;
   name: Path<TFormData>;
   register: UseFormRegister<TFormData>;
   onChange?: (event: React.ChangeEvent<HTMLElement>) => void;
   error?: FieldError;
   required?: boolean | string;
+  layout?: 'horizontal' | 'vertical';
+  className?: string;
+  color?: Color;
   render: (fieldProps: {
     ref: (instance: HTMLInputElement | null) => void;
     name: string;
@@ -36,6 +41,10 @@ export function FormField<TFormData extends FieldValues>({
   error,
   required = false,
   render,
+  layout = 'vertical',
+  className,
+  isLabelMuted,
+  color,
 }: FormFieldProps<TFormData>) {
   const uniqueId = React.useId();
   const id = `${String(name)}-${uniqueId}`;
@@ -53,19 +62,42 @@ export function FormField<TFormData extends FieldValues>({
       onChange(event);
     }
   };
+  const _color: Color = error ? 'error' : color ? color : 'neutral';
+  const Input = render({
+    ref,
+    name,
+    onChange: _onChange,
+    onBlur,
+    id,
+    color: _color,
+  });
+  const labelClass = 'font-medium no-interaction';
 
-  const color = error ? 'error' : ('' as Color);
   return (
-    <div className='flex flex-col gap-2'>
-      <label className='font-medium' htmlFor={id}>
-        {label}
-      </label>
-      <div>
-        {render({ ref, name, onChange: _onChange, onBlur, id, color })}
+    <>
+      <div className={className}>
+        {layout === 'vertical' ? (
+          <div className='flex flex-col gap-2'>
+            <label className={labelClass} htmlFor={id}>
+              {label}
+            </label>
+            {Input}
+          </div>
+        ) : (
+          <div className='flex items-center gap-2'>
+            {Input}
+            <label
+              className={clsx(labelClass, { ['text-muted']: isLabelMuted })}
+              htmlFor={id}
+            >
+              {label}
+            </label>
+          </div>
+        )}
         <div className='h-4'>
           {error && <p className='label text-error'>{error.message}</p>}
         </div>
       </div>
-    </div>
+    </>
   );
 }

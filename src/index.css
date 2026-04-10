@@ -37,7 +37,7 @@
 }
 
 @utility text-muted {
-  color: oklch(from var(--color-base-content) calc(l + 0.3) c h) !important;
+  color: oklch(from var(--color-base-content) calc(l + 0.43) c h) !important;
 }
 
 @utility border-neutral {
@@ -50,6 +50,13 @@
   outline-color: oklch(from var(--color-primary) calc(l + 0.6) c h) !important;
 }
 
+@layer utilities {
+  .no-interaction {
+    @apply pointer-events-none cursor-not-allowed select-none;
+  }
+}
+
+/* отключить выделение элемента по умолчанию */
 @layer base {
   input:-webkit-autofill,
   input:-webkit-autofill:hover,

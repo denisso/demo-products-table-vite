@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { type Color } from '../../../types/color';
+import { ICON_CONFIG } from '@/shared/config';
 
 // классы которые будут сгенерированы
 const colorMap: Record<Color, string> = {
@@ -28,5 +29,22 @@ export const Button = ({
     >
       {children}
     </button>
+  );
+};
+
+type LoadingButtonType = { loading?: boolean } & Props;
+
+export const LoadingButton = ({
+  loading,
+  children,
+  ...rest
+}: LoadingButtonType) => {
+  return (
+    <Button {...rest}>
+      {loading && (
+        <span className={`loading loading-spinner text-neutral w[${ICON_CONFIG.ICON_WIDTH_IN_CTRL}]`}></span>
+      )}
+      {children}
+    </Button>
   );
 };

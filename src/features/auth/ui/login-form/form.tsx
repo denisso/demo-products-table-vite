@@ -64,9 +64,7 @@ export function LoginForm() {
           onChange={handleErrors}
           error={errors.username}
           required
-          render={({ ref, ...fieldProps }) => (
-            <LoginInput ref={ref} {...fieldProps} />
-          )}
+          render={(fieldProps) => <LoginInput {...fieldProps} />}
         />
         <FormField
           label='Пароль'
@@ -75,16 +73,20 @@ export function LoginForm() {
           onChange={handleErrors}
           error={errors.password}
           required
-          render={({ ref, ...fieldProps }) => (
-            <PasswordInput ref={ref} {...fieldProps} />
-          )}
+          render={(fieldProps) => <PasswordInput {...fieldProps} />}
         />
-        <div className='flex items-center'>
-          <Checkbox color='primary' {...register('remember')} />
-          <span className='ml-2 text-muted'>Запомнить данные</span>
-        </div>
+        <FormField
+          label='Запомнить данные'
+          isLabelMuted
+          name='remember'
+          register={register}
+          error={errors.remember}
+          layout='horizontal'
+          color={'primary'}
+          render={(fieldProps) => <Checkbox {...fieldProps} />}
+        />
       </FormFields>
-      <LoginFormFooter />
+      <LoginFormFooter isPending={m.isPending} />
     </form>
   );
 }
