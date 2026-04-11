@@ -8,4 +8,6 @@ export const APP_CONFIG = {
   REQUEST_TIMEOUT: 10000,
 
   ACCESS_TOKEN_NAME_IN_STORAGE: 'access-token',
+
+  TABLE_PAGE_LIMIT: 20,
 } as const;

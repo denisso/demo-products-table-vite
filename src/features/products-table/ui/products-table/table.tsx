@@ -1,14 +1,13 @@
 import { useMemo } from 'react';
 import { useProductsQuery, type Product } from '@/entities/product';
 import { Table, type TableColumn } from '@/shared/ui';
-import { useProductsFilterStore } from '../model';
-import { ProductsTablePagination } from './products-table-pagination';
-import { ProductsTableSearch } from './products-table-search';
+import { useProductsFilterStore } from '../../model';
+import { ProductsTablePagination } from './pagination';
+import { APP_CONFIG } from '@/shared/config';
+import clsx from 'clsx';
 
-const PAGE_LIMIT = 10;
-
-export const ProductsTable = () => {
-  const { sortBy, order, currentPage, search, setSort, setPage, setSearch } =
+export const ProductsTable = ({ className }: { className?: string }) => {
+  const { sortBy, order, currentPage, search, setSort, setPage } =
     useProductsFilterStore();
 
   const productsQuery = useProductsQuery({
@@ -16,7 +15,7 @@ export const ProductsTable = () => {
     order,
     currentPage,
     search,
-    limit: PAGE_LIMIT,
+    limit: APP_CONFIG.TABLE_PAGE_LIMIT,
   });
 
   const columns = useMemo<TableColumn<Product>[]>(
@@ -68,7 +67,10 @@ export const ProductsTable = () => {
   };
 
   const handleNext = () => {
-    const totalPages = Math.max(1, Math.ceil(total / PAGE_LIMIT));
+    const totalPages = Math.max(
+      1,
+      Math.ceil(total / APP_CONFIG.TABLE_PAGE_LIMIT),
+    );
     if (currentPage >= totalPages) {
       return;
     }
@@ -77,9 +79,7 @@ export const ProductsTable = () => {
   };
 
   return (
-    <div className='w-full max-w-7xl flex flex-col gap-4'>
-      <ProductsTableSearch value={search} onChange={setSearch} />
-
+    <div className={clsx(className, 'w-full flex flex-col gap-4')}>
       <Table
         data={productsQuery.data?.products ?? []}
         columns={columns}
@@ -93,7 +93,7 @@ export const ProductsTable = () => {
       <ProductsTablePagination
         currentPage={currentPage}
         total={total}
-        limit={PAGE_LIMIT}
+        limit={APP_CONFIG.TABLE_PAGE_LIMIT}
         onPrev={handlePrev}
         onNext={handleNext}
       />

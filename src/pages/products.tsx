@@ -1,20 +1,26 @@
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@/shared/ui';
 import { ProductsTable } from '@/features/products-table';
+import { Container } from '@/shared/ui';
+import { ProductsTableSearch } from '@/features/products-table';
+import { LogoutButton } from '@/features/auth';
 
 export const ProductsPage = () => {
-  const navigate = useNavigate();
   return (
-    <div className='w-full min-h-screen p-6 flex flex-col gap-6'>
-      <div className='w-full max-w-7xl flex justify-between items-center'>
-        <h1 className='text-2xl font-bold'>Products</h1>
-        <div className='w-40'>
-          <Button onClick={() => navigate('/login')} color='primary'>
-            Goto login
-          </Button>
-        </div>
+    <div className='min-h-screen flex flex-col gap-4 w-full items-center'>
+      <div className='sticky top-0 z-10  w-full'>
+        <Container>
+          <header className='flex'>
+            <div className='flex-1'></div>
+            <ProductsTableSearch className='w-7xl' />
+            <div className='flex-1 flex justify-end'>
+              <LogoutButton />
+            </div>
+          </header>
+        </Container>
       </div>
-      <ProductsTable />
+
+      <Container className='h-full flex justify-between items-center'>
+        <ProductsTable className='w-7xl' />
+      </Container>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { router } from '@/app/router';
 import { tokenApi } from '@/shared/lib/token';
 import { userApi } from '@/entities/user';
 import { loginRequest, FetchError, type LoginResponse } from '@/shared/api';
@@ -12,7 +12,6 @@ interface LoginVariables {
 }
 
 export const useLogin = () => {
-  const navigate = useNavigate();
   const mutation = useMutation<LoginResponse, FetchError, LoginVariables>({
     mutationFn: ({ username, password }) => {
       return loginRequest(username, password);
@@ -28,7 +27,7 @@ export const useLogin = () => {
       } else {
         localStorage.removeItem(APP_CONFIG.ACCESS_TOKEN_NAME_IN_STORAGE);
       }
-      navigate('/');
+      router.navigate('/');
     },
   });
 
