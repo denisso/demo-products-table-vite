@@ -1,83 +1,97 @@
-# React + TypeScript + Vite
+# SPA: Аутентификация и каталог товаров
 
-This template provides a minimal setup to get React working in Vite with HMR and
-some ESLint rules.
+Одностраничное приложение (SPA), реализующее форму входа, защищённую маршрутизацию и отображение каталога товаров с поддержкой пагинации, поиска и сортировки.
 
-Currently, two official plugins are available:
+## Технологический стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react)
-  uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc)
-  uses [SWC](https://swc.rs/)
+* **Фреймворк и сборка:** Vite, React (v19)
+* **Стилизация:** Tailwind CSS (v4), DaisyUI
+* **Работа с данными:** TanStack Query
+* **Маршрутизация:** react-router-dom (v7)
+* **Формы:** react-hook-form
+* **Локальное состояние:** Zustand
+* **Архитектура:** Feature-Sliced Design
 
-## React Compiler
+Базовый URL API задан в коде: DummyJSON (`https://dummyjson.com`).
 
-The React Compiler is not enabled on this template because of its impact on dev
-& build performances. To add it, see
-[this documentation](https://react.dev/learn/react-compiler/installation).
+## Установка и запуск
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the
-configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+npm install
+npm run dev
 ```
 
-You can also install
-[eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x)
-and
-[eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom)
-for React-specific lint rules:
+## Доступные скрипты
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+* `npm run dev` — запуск dev-сервера (Vite)
+* `npm run build` — сборка production-версии
+* `npm run preview` — локальный просмотр production-сборки
+* `npm run lint` — проверка кода (ESLint)
+* `npm run format` — форматирование (Prettier)
+* `npm run format:check` — проверка форматирования
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+## Функциональность
+
+### Аутентификация
+
+* **Валидация формы:**
+
+  * поля логина и пароля обязательны;
+  * при пустом значении отображается сообщение «Обязательное поле».
+
+* **Обработка ошибок API:**
+
+  * HTTP **400** (некорректные учетные данные) — ошибки отображаются под соответствующими полями;
+  * прочие ошибки — отображается уведомление (toast) о сетевом сбое.
+
+Для тестирования можно использовать пользователей из документации DummyJSON Auth API
+(например: `emilys` / `emilyspass`).
+
+### Сохранение сессии
+
+* **Опция «Запомнить данные» включена:**
+
+  * `accessToken` сохраняется в `localStorage`;
+  * сессия восстанавливается при повторном открытии приложения.
+
+* **Опция выключена:**
+
+  * токен хранится только в памяти (Zustand);
+  * при перезагрузке страницы или закрытии вкладки сессия сбрасывается.
+
+Имя пользователя хранится только в памяти и не сохраняется между сессиями без токена.
+
+### Каталог товаров
+
+* **Сортировка:**
+
+  * клик по заголовку столбца активирует сортировку;
+  * повторный клик переключает порядок (`asc` / `desc`).
+
+* **Поиск:**
+
+  * реализован с использованием debounce;
+  * при наличии поискового запроса используется endpoint `/products/search?q=...`;
+  * при пустом запросе — `/products`.
+
+* **Пагинация:**
+
+  * реализована постраничная загрузка данных;
+  * размер страницы конфигурируется на уровне feature.
+
+## Структура проекта
+
+Исходный код расположен в директории `src/` и организован в соответствии с принципами Feature-Sliced Design:
+
+* `app/` — инициализация приложения, провайдеры, маршрутизация
+* `pages/` — страницы
+* `widgets/` — композиционные UI-блоки
+* `features/` — пользовательские сценарии
+* `entities/` — бизнес-сущности
+* `shared/` — переиспользуемые модули и утилиты
+
+Настроен алиас импортов: `@/` → `src/` (см. `vite.config.ts`).
+
+## Лицензия
+
+Проект распространяется под лицензией MIT License.
