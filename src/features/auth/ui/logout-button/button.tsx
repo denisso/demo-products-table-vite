@@ -12,8 +12,9 @@ export const LogoutButton = () => {
   return (
     <Icon
       filename='logout'
-      height={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
-      width='auto'
+      className='cursor-pointer'
+      height='auto'
+      width={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
       onClick={onClick}
     />
   );
