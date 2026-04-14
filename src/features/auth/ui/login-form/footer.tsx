@@ -8,7 +8,7 @@ export const LoginFormFooter = ({isPending}:{isPending: boolean}) => {
         loading={isPending}
         type='submit'
         color='primary'
-        className='mt-6'
+        className='mt-6 w-full'
         disabled={isPending}
       >
         {isPending ? 'Вход....' : 'Войти'}

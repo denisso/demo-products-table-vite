@@ -9,5 +9,6 @@ export const APP_CONFIG = {
 
   ACCESS_TOKEN_NAME_IN_STORAGE: 'access-token',
 
-  TABLE_PAGE_LIMIT: 20,
+  TABLE_PAGE_LIMIT: 15,
+  BUTTONS_PAGINATION_COUNT: 7,
 } as const;

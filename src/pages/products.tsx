@@ -6,7 +6,7 @@ import { LogoutButton } from '@/features/auth';
 export const ProductsPage = () => {
   return (
     <div className='min-h-screen flex flex-col gap-4 w-full items-center'>
-      <div className='sticky top-0 z-10  w-full'>
+      <div className='sticky top-0 z-10  w-full bg-white/20 backdrop-blur-md'>
         <Container>
           <header className='grid grid-cols-[1fr_minmax(auto,60rem)_1fr] gap-2'>
             <div className='grow'></div>

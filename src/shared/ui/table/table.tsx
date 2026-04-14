@@ -30,7 +30,7 @@ export const Table = <TItem extends { id: number | string }>({
 }: TableProps<TItem>) => {
   return (
     <div className='overflow-x-auto rounded-box border border-base-300 bg-base-100'>
-      <table className='table table-zebra w-full'>
+      <table className='table table-zebra'>
         <thead>
           <tr>
             {columns.map((column) => {

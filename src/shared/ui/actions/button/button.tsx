@@ -24,7 +24,7 @@ export const Button = ({
   return (
     <button
       onClick={onClick}
-      className={clsx('btn w-full', colorClass, className)}
+      className={clsx('btn', colorClass, className)}
       {...rest}
     >
       {children}
