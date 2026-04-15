@@ -21,7 +21,19 @@ export const getProducts = async ({
 }: GetProductsParams): Promise<ProductsResponse> => {
   const params = new URLSearchParams();
   const skip = (currentPage - 1) * limit;
-
+  params.set(
+    'select',
+    String([
+      'thumbnail',
+      'title',
+      'brand',
+      'category',
+      'price',
+      'rating',
+      'stock',
+      'availabilityStatus',
+    ]),
+  );
   params.set('limit', String(limit));
   params.set('skip', String(skip));
 
@@ -40,5 +52,8 @@ export const getProducts = async ({
     params.set('q', trimmedSearch);
   }
 
-  return fetcher<ProductsResponse>(`${BASE_URL}${endpoint}?${params.toString()}`);
+  const res = fetcher<ProductsResponse>(
+    `${BASE_URL}${endpoint}?${params.toString()}`,
+  );
+  return res;
 };

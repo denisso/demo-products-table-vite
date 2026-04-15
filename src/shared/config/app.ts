@@ -6,9 +6,10 @@ export const APP_CONFIG = {
   DEBOUNCE_SEARCH: 300,
   // время ожидания любого запроса данных с сервера в мс
   REQUEST_TIMEOUT: 10000,
-
+  // имя ключа в localstorage для токена
   ACCESS_TOKEN_NAME_IN_STORAGE: 'access-token',
-
+  // число записей на одной странице таблицы
   TABLE_PAGE_LIMIT: 15,
+  // число видимых страниц в блоке, в котором находится текущая страница
   BUTTONS_PAGINATION_COUNT: 7,
 } as const;

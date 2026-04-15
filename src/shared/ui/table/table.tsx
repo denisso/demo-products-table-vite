@@ -14,7 +14,7 @@ type TableProps<TItem extends { id: number | string }> = {
   columns: TableColumn<TItem>[];
   sortBy?: string;
   order?: 'asc' | 'desc';
-  loading?: boolean;
+  isLoading?: boolean;
   emptyText?: string;
   onSort?: (key: string) => void;
 };
@@ -24,7 +24,7 @@ export const Table = <TItem extends { id: number | string }>({
   columns,
   sortBy,
   order,
-  loading = false,
+  isLoading = false,
   emptyText = 'Нет данных',
   onSort,
 }: TableProps<TItem>) => {
@@ -59,7 +59,7 @@ export const Table = <TItem extends { id: number | string }>({
           </tr>
         </thead>
         <tbody>
-          {loading ? (
+          {isLoading ? (
             <tr>
               <td colSpan={columns.length}>
                 <div className='flex justify-center py-8'>
@@ -69,7 +69,10 @@ export const Table = <TItem extends { id: number | string }>({
             </tr>
           ) : data.length === 0 ? (
             <tr>
-              <td colSpan={columns.length} className='text-center text-muted py-8'>
+              <td
+                colSpan={columns.length}
+                className='text-center text-muted py-8'
+              >
                 {emptyText}
               </td>
             </tr>
@@ -77,14 +80,18 @@ export const Table = <TItem extends { id: number | string }>({
             data.map((item) => (
               <tr key={String(item.id)}>
                 {columns.map((column) => {
-                  const cellValue = item[column.key];
+                  const cellValue = (
+                    item[column.key] === undefined ? '' : item[column.key]
+                  ) as TItem[keyof TItem];
 
                   return (
                     <td
                       key={`${String(item.id)}-${String(column.key)}`}
                       className={clsx(column.className)}
                     >
-                      {column.render ? column.render(cellValue, item) : String(cellValue)}
+                      {column.render
+                        ? column.render(cellValue, item)
+                        : String(cellValue)}
                     </td>
                   );
                 })}

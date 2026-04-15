@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useProductsQuery, type Product } from '@/entities/product';
 import { Table, type TableColumn } from '@/shared/ui';
 import { useProductsFilterStore } from '../../model';
-import { ProductsTablePagination } from './pagination';
+import { Pagination } from '@/shared/ui/actions';
 import { APP_CONFIG } from '@/shared/config';
 import clsx from 'clsx';
 
@@ -58,26 +58,6 @@ export const ProductsTable = ({ className }: { className?: string }) => {
     setSort(column, 'asc');
   };
 
-  const handlePrev = () => {
-    if (currentPage <= 1) {
-      return;
-    }
-
-    setPage(currentPage - 1);
-  };
-
-  const handleNext = () => {
-    const totalPages = Math.max(
-      1,
-      Math.ceil(total / APP_CONFIG.TABLE_PAGE_LIMIT),
-    );
-    if (currentPage >= totalPages) {
-      return;
-    }
-
-    setPage(currentPage + 1);
-  };
-
   return (
     <div className={clsx(className, 'w-full flex flex-col gap-4')}>
       <Table
@@ -85,17 +65,16 @@ export const ProductsTable = ({ className }: { className?: string }) => {
         columns={columns}
         sortBy={sortBy}
         order={order}
-        loading={productsQuery.isLoading || productsQuery.isFetching}
+        isLoading={productsQuery.isLoading || productsQuery.isFetching}
         emptyText='Товары не найдены'
         onSort={handleSort}
       />
-
-      <ProductsTablePagination
+      <Pagination
         currentPage={currentPage}
         total={total}
         limit={APP_CONFIG.TABLE_PAGE_LIMIT}
-        onPrev={handlePrev}
-        onNext={handleNext}
+        setPage={setPage}
+        className='flex gap-2 justify-end'
       />
     </div>
   );

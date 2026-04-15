@@ -1,15 +1,6 @@
 import React from 'react';
 import { Button } from '@/shared/ui';
-import { useProductsFilterStore } from '@/features/products-table/model';
 import { APP_CONFIG } from '@/shared/config';
-
-type ProductsTablePaginationProps = {
-  currentPage: number;
-  total: number;
-  limit: number;
-  onPrev: () => void;
-  onNext: () => void;
-};
 
 type State = {
   current: number;
@@ -19,14 +10,13 @@ type State = {
   right: number[];
 };
 
-const Buttons = ({
-  buttons,
-  current,
-}: {
+type ButtonsProps = {
   buttons: number[];
   current: number;
-}) => {
-  const { setPage } = useProductsFilterStore();
+  setPage: (page: number) => void;
+};
+
+const Buttons = ({ buttons, current, setPage }: ButtonsProps) => {
   return (
     <>
       {buttons.map((num) => (
@@ -47,10 +37,8 @@ type Action =
   | { type: 'setTotal'; payload: number }
   | { type: 'setCurrent'; payload: number };
 
-
-
 const reducer = (state: State, action: Action): State => {
-  const bpc = APP_CONFIG.BUTTONS_PAGINATION_COUNT
+  const bpc = APP_CONFIG.BUTTONS_PAGINATION_COUNT;
   let { current, total } = state;
   let left: number[] = [];
   let mid: number[] = [];
@@ -75,10 +63,7 @@ const reducer = (state: State, action: Action): State => {
     right = [total];
   } else if (current + bpc - 1 > total) {
     left = [1];
-    right = Array.from(
-      { length: bpc },
-      (_, i) => total - bpc + i + 1,
-    );
+    right = Array.from({ length: bpc }, (_, i) => total - bpc + i + 1);
   } else {
     left = [1];
     mid = Array.from(
@@ -99,11 +84,21 @@ const initialState: State = {
   right: [],
 };
 
-export const ProductsTablePagination = ({
+type PaginationProps = {
+  currentPage: number;
+  total: number;
+  limit: number;
+  className?: string;
+  setPage: (page: number) => void;
+};
+
+export const Pagination = ({
   currentPage,
   total,
   limit,
-}: ProductsTablePaginationProps) => {
+  className,
+  setPage,
+}: PaginationProps) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   React.useEffect(() => {
@@ -112,14 +107,16 @@ export const ProductsTablePagination = ({
     dispatch({ type: 'setTotal', payload: totalPages });
   }, [currentPage, total, limit, dispatch]);
   return (
-    <div className='flex items-center justify-between gap-4'>
-      <div className='flex gap-2 justify-end w-full'>
-        <Buttons buttons={state.left} current={state.current} />{' '}
-        {state.mid.length ? '...' : ''}{' '}
-        <Buttons buttons={state.mid} current={state.current} />{' '}
-        {state.right.length ? '...' : ''}{' '}
-        <Buttons buttons={state.right} current={state.current} />
-      </div>
+    <div className={className}>
+      <Buttons buttons={state.left} current={state.current} setPage={setPage} />
+      {state.mid.length ? '...' : ''}
+      <Buttons buttons={state.mid} current={state.current} setPage={setPage} />
+      {state.right.length ? '...' : ''}
+      <Buttons
+        buttons={state.right}
+        current={state.current}
+        setPage={setPage}
+      />
     </div>
   );
 };
