@@ -1,5 +1,5 @@
 import { useToastStore } from '@/shared/lib';
-import { Toast } from './toast';
+import { Toast } from './Toast';
 
 export const ToastsContainer = () => {
   const toasts = useToastStore((state) => state.toasts);

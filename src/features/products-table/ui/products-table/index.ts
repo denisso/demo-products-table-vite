@@ -1,2 +1,2 @@
-export { ProductsTable } from './table';
-export { ProductsTableSearch } from './search';
+export { ProductsTable } from './Table';
+export { ProductsTableSearch } from './Search';

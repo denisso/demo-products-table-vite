@@ -1,1 +1,1 @@
-export { TokenProvider } from './token';
+export { TokenProvider } from './Token';

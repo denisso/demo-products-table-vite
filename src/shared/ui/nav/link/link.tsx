@@ -12,7 +12,7 @@ const colorMap: Record<Color, string> = {
 
 type Props = {
   color?: Color;
-} & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>;
+} & React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
 export const Link = ({ children, color, className, href, onClick }: Props) => {
   const _to = href ? href : '#';

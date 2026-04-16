@@ -1,1 +1,1 @@
-export { useProductsFilterStore, productsFilterApi } from './use-produts-filter';
+export { useProductsFilterStore, productsFilterApi } from './useProductsFilter';

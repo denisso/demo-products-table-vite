@@ -8,9 +8,9 @@ import {
   Checkbox,
 } from '@/shared/ui';
 import { toastApi } from '@/shared/lib/toast';
-import { LoginFormHeader } from './header';
+import { LoginFormHeader } from './Header';
 import { useLogin } from '@/features/auth';
-import { LoginFormFooter } from './footer';
+import { LoginFormFooter } from './Footer';
 
 interface LoginFormData {
   username: string;

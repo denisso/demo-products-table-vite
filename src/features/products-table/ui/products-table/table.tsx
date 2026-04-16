@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 import { useProductsQuery, type Product } from '@/entities/product';
-import { Table, type TableColumn } from '@/shared/ui';
+import { Table, type TableColumn, Pagination } from '@/shared/ui';
 import { useProductsFilterStore } from '../../model';
-import { Pagination } from '@/shared/ui/actions';
 import { APP_CONFIG } from '@/shared/config';
 import clsx from 'clsx';
 
@@ -42,7 +41,7 @@ export const ProductsTable = ({ className }: { className?: string }) => {
       },
       { key: 'rating', header: 'Рейтинг', sortable: true },
       { key: 'stock', header: 'Остаток', sortable: true },
-      { key: 'availabilityStatus', header: 'Статус' },
+      { key: 'availabilityStatus', header: 'Статус', sortable: true },
     ],
     [],
   );
@@ -65,7 +64,7 @@ export const ProductsTable = ({ className }: { className?: string }) => {
         columns={columns}
         sortBy={sortBy}
         order={order}
-        isLoading={productsQuery.isLoading || productsQuery.isFetching}
+        isLoading={productsQuery.isLoading}
         emptyText='Товары не найдены'
         onSort={handleSort}
       />

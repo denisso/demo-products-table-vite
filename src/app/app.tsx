@@ -1,6 +1,6 @@
 import { ToastsContainer } from '../shared/ui/feedback';
 import { RouterProvider } from 'react-router-dom';
-import { router } from '@/app/router/router';
+import { router } from '@/app/router/Router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TokenProvider } from '../features/auth';
 
@@ -15,7 +15,7 @@ const queryClient = new QueryClient({
 
 export function App() {
   return (
-    <div className='min-h-screen flex flex-col justify-center items-center base-100'>
+    <div className='min-h-screen flex flex-col justify-center items-center base-300'>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
         <ToastsContainer />

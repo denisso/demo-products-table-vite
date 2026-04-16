@@ -1,2 +1,2 @@
-export { getProducts, type GetProductsParams } from './get-products';
-export { useProductsQuery } from './use-products-query';
+export { getProducts, type GetProductsParams } from './getProducts';
+export { useProductsQuery } from './useProductsQuery';

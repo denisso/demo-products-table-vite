@@ -1,2 +1,2 @@
-export * from './router';
-export * from './protected-route';
+export * from './Router';
+export * from './ProtectedRoute';
