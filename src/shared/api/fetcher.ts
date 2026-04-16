@@ -1,5 +1,7 @@
 // Обертка для fwtch, немного упрощает работу с типом данных и ошибок
 
+const BASE_URL = 'https://dummyjson.com';
+
 export class FetchError extends Error {
   public readonly status: number;
   constructor(status: number, statusText: string) {
@@ -26,7 +28,7 @@ export async function fetcher<T = unknown>(
     };
   }
 
-  const response = await fetch(url, processedOptions as RequestInit);
+  const response = await fetch(BASE_URL + url, processedOptions as RequestInit);
 
   if (!response.ok) {
     throw new FetchError(response.status, response.statusText);

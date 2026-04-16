@@ -1,1 +1,1 @@
-export { userApi, useUserStore } from './model';
+export { userApi, useUserStore } from './model/useUserStore';

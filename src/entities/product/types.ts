@@ -13,9 +13,4 @@ export interface Product {
   discountPercentage: number;
 }
 
-export interface ProductsResponse {
-  products: Product[];
-  total: number;
-  skip: number;
-  limit: number;
-}
+

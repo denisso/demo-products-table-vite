@@ -4,9 +4,9 @@ import {
   FormField,
   FormFields,
   PasswordInput,
-  LoginInput,
   Checkbox,
 } from '@/shared/ui';
+import { LoginInput } from '@/features/auth/ui/login-input/Login';
 import { toastApi } from '@/shared/lib/toast';
 import { LoginFormHeader } from './Header';
 import { useLogin } from '@/features/auth';

@@ -1,13 +1,14 @@
 import { useMemo } from 'react';
-import { useProductsQuery, type Product } from '@/entities/product';
+import { type Product } from '@/entities/product';
 import { Table, type TableColumn, Pagination } from '@/shared/ui';
-import { useProductsFilterStore } from '../../model';
+import { useFiltersStore } from '../../model';
 import { APP_CONFIG } from '@/shared/config';
+import { useProductsQuery } from '../../model'
 import clsx from 'clsx';
 
 export const ProductsTable = ({ className }: { className?: string }) => {
   const { sortBy, order, currentPage, search, setSort, setPage } =
-    useProductsFilterStore();
+    useFiltersStore();
 
   const productsQuery = useProductsQuery({
     sortBy,

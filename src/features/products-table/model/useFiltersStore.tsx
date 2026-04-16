@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface ProductState {
+interface FiltersStore {
   sortBy: string;
   order: 'asc' | 'desc';
   currentPage: number;
@@ -8,10 +8,9 @@ interface ProductState {
   setSort: (sortBy: string, order: 'asc' | 'desc') => void;
   setPage: (page: number) => void;
   setSearch: (q: string) => void;
-  resetFilters: () => void;
 }
 
-export const useProductsFilterStore = create<ProductState>()((set) => ({
+export const useFiltersStore = create<FiltersStore>()((set) => ({
   sortBy: 'title',
   order: 'asc',
   currentPage: 1,
@@ -25,23 +24,17 @@ export const useProductsFilterStore = create<ProductState>()((set) => ({
   setSearch: (q) => {
     set({ search: q, currentPage: 1 });
   },
-  resetFilters: () => {
-    set({ sortBy: 'title', order: 'asc', currentPage: 1, search: '' });
-  },
 }));
 
 export const productsFilterApi = {
   setSort: (sortBy: string, order: 'asc' | 'desc') => {
-    useProductsFilterStore.getState().setSort(sortBy, order);
+    useFiltersStore.getState().setSort(sortBy, order);
   },
 
   setPage: (page: number) => {
-    useProductsFilterStore.getState().setPage(page);
+    useFiltersStore.getState().setPage(page);
   },
   setSearch: (q: string) => {
-    useProductsFilterStore.getState().setSearch(q);
-  },
-  resetFilters: () => {
-    useProductsFilterStore.getState().resetFilters();
+    useFiltersStore.getState().setSearch(q);
   },
 };

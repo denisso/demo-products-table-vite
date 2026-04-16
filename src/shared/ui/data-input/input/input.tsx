@@ -11,7 +11,7 @@ const colorMap: Record<Color, string> = {
   neutral: 'border-neutral outline-neutral',
 };
 
-type Props = {
+type InputProps = {
   type: 'search' | 'text' | 'password';
   placeholder?: string;
   color?: Color;
@@ -19,9 +19,9 @@ type Props = {
   rightIcon?: React.ReactNode;
 };
 
-const Input = React.forwardRef<
+export const Input = React.forwardRef<
   HTMLInputElement,
-  Props & React.ComponentProps<'input'>
+  InputProps & React.ComponentProps<'input'>
 >(
   (
     {
@@ -56,9 +56,13 @@ const Input = React.forwardRef<
 
 Input.displayName = 'Input';
 
-type InputPropsShared = Omit<React.ComponentProps<'input'>, 'ref' | 'type'>;
+export type InputPropsShared = Omit<
+  React.ComponentProps<'input'>,
+  'ref' | 'type'
+> &
+  Pick<InputProps, 'color'>;
 
-const InputWithClearText = ({
+export const InputWithClearText = ({
   color,
   placeholder,
   ref,
@@ -66,11 +70,10 @@ const InputWithClearText = ({
   iconText,
   onChange,
   ...rest
-}: Pick<Props, 'color'> &
-  InputPropsShared & { ref: React.ForwardedRef<HTMLInputElement> } & {
-    icon: keyof typeof ICON_PATH;
-    iconText: string;
-  }) => {
+}: InputPropsShared & { ref?: React.ForwardedRef<HTMLInputElement> } & {
+  icon: keyof typeof ICON_PATH;
+  iconText: string;
+}) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [isShowClear, setIsShowClear] = React.useState(false);
 
@@ -131,45 +134,9 @@ const InputWithClearText = ({
   );
 };
 
-export const SearchInput = React.forwardRef<
-  HTMLInputElement,
-  Pick<Props, 'color'> & InputPropsShared
->(({ color, placeholder, ...rest }, ref) => {
-  return (
-    <InputWithClearText
-      ref={ref}
-      icon={'search'}
-      iconText='Поиск'
-      placeholder={placeholder ? placeholder : 'Поиск'}
-      color={color}
-      {...rest}
-    />
-  );
-});
-
-SearchInput.displayName = 'SearchInput';
-
-export const LoginInput = React.forwardRef<
-  HTMLInputElement,
-  Pick<Props, 'color'> & InputPropsShared
->(({ color, placeholder, ...rest }, ref) => {
-  return (
-    <InputWithClearText
-      ref={ref}
-      icon={'login'}
-      iconText='Логин'
-      placeholder={placeholder ? placeholder : 'Логин'}
-      color={color}
-      {...rest}
-    />
-  );
-});
-
-LoginInput.displayName = 'LoginInput';
-
 export const PasswordInput = React.forwardRef<
   HTMLInputElement,
-  Pick<Props, 'color'> & InputPropsShared
+  InputPropsShared
 >(({ color, placeholder, autoComplete, ...rest }, ref) => {
   const [hide, setHide] = React.useState(true);
   return (
@@ -205,17 +172,16 @@ export const PasswordInput = React.forwardRef<
 
 PasswordInput.displayName = 'PasswordInput';
 
-export const TextInput = React.forwardRef<
-  HTMLInputElement,
-  Pick<Props, 'color' | 'placeholder'> & InputPropsShared
->(({ color, placeholder, ...rest }, ref) => (
-  <Input
-    placeholder={placeholder}
-    type='text'
-    color={color}
-    ref={ref}
-    {...rest}
-  />
-));
+export const TextInput = React.forwardRef<HTMLInputElement, InputPropsShared>(
+  ({ color, placeholder, ...rest }, ref) => (
+    <Input
+      placeholder={placeholder}
+      type='text'
+      color={color}
+      ref={ref}
+      {...rest}
+    />
+  ),
+);
 
 TextInput.displayName = 'TextInput';

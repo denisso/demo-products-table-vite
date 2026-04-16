@@ -1,6 +1,5 @@
-import { ProductsTable } from '@/features/products-table';
+import { ProductsTable, SearchInput } from '@/features/products-table';
 import { Container } from '@/shared/ui';
-import { ProductsTableSearch } from '@/features/products-table';
 import { LogoutButton } from '@/features/auth';
 
 export const ProductsPage = () => {
@@ -10,7 +9,7 @@ export const ProductsPage = () => {
         <Container>
           <header className='grid grid-cols-[1fr_minmax(auto,60rem)_1fr] gap-2'>
             <div className='grow'></div>
-            <ProductsTableSearch className='max-w-7xl' />
+            <SearchInput className='max-w-7xl' />
             <div className='grow flex justify-end'>
               <LogoutButton />
             </div>

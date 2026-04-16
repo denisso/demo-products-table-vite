@@ -2,7 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { router } from '@/app/router';
 import { tokenApi } from '@/shared/lib/token';
 import { userApi } from '@/entities/user';
-import { loginRequest, FetchError, type LoginResponse } from '@/shared/api';
+import { login, type LoginResponse } from '../api';
+import type { FetchError } from '@/shared/api';
 import { APP_CONFIG } from '@/shared/config';
 
 interface LoginVariables {
@@ -14,7 +15,7 @@ interface LoginVariables {
 export const useLogin = () => {
   const mutation = useMutation<LoginResponse, FetchError, LoginVariables>({
     mutationFn: ({ username, password }) => {
-      return loginRequest(username, password);
+      return login(username, password);
     },
     onSuccess: (response, variables) => {
       tokenApi.setToken(response.accessToken);

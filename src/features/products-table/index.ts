@@ -1,2 +1,2 @@
 export * from './model';
-export * from './ui/products-table';
+export * from './ui';

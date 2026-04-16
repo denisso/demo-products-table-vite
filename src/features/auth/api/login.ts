@@ -1,6 +1,4 @@
-import { fetcher } from './fetcher';
-
-const BASE_URL = 'https://dummyjson.com';
+import { fetcher } from '@/shared/api/fetcher';
 
 export type LoginResponse = {
   id: string;
@@ -14,8 +12,8 @@ export type LoginResponse = {
   refreshToken: string;
 };
 
-export const loginRequest = (username: string, password: string) => {
-  return fetcher<LoginResponse>(BASE_URL + '/auth/login', {
+export const login = (username: string, password: string) => {
+  return fetcher<LoginResponse>('/auth/login', {
     method: 'POST',
     body: { username, password },
   });

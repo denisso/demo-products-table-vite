@@ -1,1 +1,2 @@
-export { useProductsFilterStore, productsFilterApi } from './useProductsFilter';
+export * from './useFiltersStore';
+export * from './useProductsQuery';
