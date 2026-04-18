@@ -32,8 +32,8 @@ export const Table = <TItem extends { id: number | string }>({
   className,
 }: TableProps<TItem>) => {
   return (
-    <div className='relative w-full max-w-full overflow-x-auto'>
-      <table className={clsx('table min-w-max border-collapse', className)}>
+    <div className='relative w-full min-w-0 max-w-full overflow-x-auto overscroll-x-contain'>
+      <table className={clsx('table min-w-max', className)}>
         <TableHeader
           columns={columns}
           sortBy={sortBy}

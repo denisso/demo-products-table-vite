@@ -54,7 +54,7 @@ export const ProductsTable = ({ className }: { className?: string }) => {
   };
 
   return (
-    <div className={clsx(className, 'w-full flex flex-col gap-4')}>
+    <div className={clsx(className, 'w-full min-w-0 max-w-full flex flex-col gap-4')}>
       <Table
         data={productsQuery.data?.products ?? []}
         columns={columns}

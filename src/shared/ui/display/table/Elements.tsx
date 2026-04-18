@@ -2,9 +2,10 @@ import * as React from 'react';
 import type { TableColumn } from './Table';
 import clsx from 'clsx';
 
-const addSticky = (sticky?: number) => {
+const stickyColumnProps = (sticky?: number) => {
   if (sticky == undefined) return {};
   return {
+    className: 'bg-base-100 shadow-[2px_0_0_0_var(--color-base-300)]',
     style: {
       zIndex: 10,
       position: 'sticky',
@@ -35,8 +36,9 @@ function TableHeader<TItem extends { id: number | string }>({
           const columnKey = String(column.key);
           const isActiveSort = sortBy === columnKey;
 
+          const sticky = stickyColumnProps(column.sticky);
           return (
-            <TableHead key={columnKey} {...addSticky(column.sticky)}>
+            <TableHead key={columnKey} className={sticky.className} style={sticky.style}>
               {column.sortable ? (
                 <button
                   type='button'
@@ -98,11 +100,12 @@ function TableBody<TItem extends { id: number | string }>({
                 item[column.key] === undefined ? '' : item[column.key]
               ) as TItem[keyof TItem];
 
+              const sticky = stickyColumnProps(column.sticky);
               return (
                 <TableCell
                   key={`${String(item.id)}-${String(column.key)}`}
-                  className={column.className}
-                  {...addSticky(column.sticky)}
+                  className={clsx(column.className, sticky.className)}
+                  style={sticky.style}
                 >
                   {column.render
                     ? column.render(cellValue, item)
