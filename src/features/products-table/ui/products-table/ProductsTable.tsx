@@ -1,10 +1,35 @@
-import { useMemo } from 'react';
 import { type Product } from '@/entities/product';
 import { Table, type TableColumn, Pagination } from '@/shared/ui';
-import { useFiltersStore } from '../../model';
+import { useFiltersStore, useProductsQuery } from '../../model';
 import { APP_CONFIG } from '@/shared/config';
-import { useProductsQuery } from '../../model'
 import clsx from 'clsx';
+
+const columns: TableColumn<Product>[] = [
+  {
+    key: 'thumbnail',
+    header: 'Фото',
+    render: (value, row) => (
+      <img
+        src={String(value)}
+        alt={row.title}
+        className='w-12 h-12 object-cover rounded'
+      />
+    ),
+    sticky: 0
+  },
+  { key: 'title', header: 'Название', sortable: true, sticky: 48 },
+  { key: 'brand', header: 'Бренд', sortable: true },
+  { key: 'category', header: 'Категория', sortable: true },
+  {
+    key: 'price',
+    header: 'Цена',
+    sortable: true,
+    render: (value) => `$${Number(value).toFixed(2)}`,
+  },
+  { key: 'rating', header: 'Рейтинг', sortable: true },
+  { key: 'stock', header: 'Остаток', sortable: true },
+  { key: 'availabilityStatus', header: 'Статус', sortable: true },
+];
 
 export const ProductsTable = ({ className }: { className?: string }) => {
   const { sortBy, order, currentPage, search, setSort, setPage } =
@@ -18,35 +43,6 @@ export const ProductsTable = ({ className }: { className?: string }) => {
     limit: APP_CONFIG.TABLE_PAGE_LIMIT,
   });
 
-  const columns = useMemo<TableColumn<Product>[]>(
-    () => [
-      {
-        key: 'thumbnail',
-        header: 'Фото',
-        render: (value, row) => (
-          <img
-            src={String(value)}
-            alt={row.title}
-            className='w-12 h-12 object-cover rounded'
-          />
-        ),
-      },
-      { key: 'title', header: 'Название', sortable: true },
-      { key: 'brand', header: 'Бренд', sortable: true },
-      { key: 'category', header: 'Категория', sortable: true },
-      {
-        key: 'price',
-        header: 'Цена',
-        sortable: true,
-        render: (value) => `$${Number(value).toFixed(2)}`,
-      },
-      { key: 'rating', header: 'Рейтинг', sortable: true },
-      { key: 'stock', header: 'Остаток', sortable: true },
-      { key: 'availabilityStatus', header: 'Статус', sortable: true },
-    ],
-    [],
-  );
-
   const total = productsQuery.data?.total ?? 0;
 
   const handleSort = (column: string) => {
@@ -54,7 +50,6 @@ export const ProductsTable = ({ className }: { className?: string }) => {
       setSort(column, order === 'asc' ? 'desc' : 'asc');
       return;
     }
-
     setSort(column, 'asc');
   };
 

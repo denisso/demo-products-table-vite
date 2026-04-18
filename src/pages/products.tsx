@@ -18,7 +18,7 @@ export const ProductsPage = () => {
       </div>
 
       <Container className='h-full flex justify-between items-center'>
-        <ProductsTable className='w-240' />
+        <ProductsTable />
       </Container>
     </div>
   );

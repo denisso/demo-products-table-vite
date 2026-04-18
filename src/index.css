@@ -69,3 +69,7 @@
     caret-color: var(--color-base-content);
   }
 }
+
+html, body, #root {
+  @apply max-w-full overflow-x-hidden;
+}

@@ -2,6 +2,17 @@ import * as React from 'react';
 import type { TableColumn } from './Table';
 import clsx from 'clsx';
 
+const addSticky = (sticky?: number) => {
+  if (sticky == undefined) return {};
+  return {
+    style: {
+      zIndex: 10,
+      position: 'sticky',
+      left: sticky,
+    } as React.CSSProperties,
+  };
+};
+
 type TableHeaderProps<TItem> = {
   columns: TableColumn<TItem>[];
   sortBy?: string;
@@ -19,13 +30,13 @@ function TableHeader<TItem extends { id: number | string }>({
 }: TableHeaderProps<TItem>) {
   return (
     <thead className={className} {...props}>
-      <tr>
+      <TableRow>
         {columns.map((column) => {
           const columnKey = String(column.key);
           const isActiveSort = sortBy === columnKey;
 
           return (
-            <th key={columnKey} className={column.className}>
+            <TableHead key={columnKey} {...addSticky(column.sticky)}>
               {column.sortable ? (
                 <button
                   type='button'
@@ -40,10 +51,10 @@ function TableHeader<TItem extends { id: number | string }>({
               ) : (
                 column.header
               )}
-            </th>
+            </TableHead>
           );
         })}
-      </tr>
+      </TableRow>
     </thead>
   );
 }
@@ -57,7 +68,7 @@ type TableBodyProps<TItem> = {
 
 function TableBody<TItem extends { id: number | string }>({
   data,
-  isLoading, 
+  isLoading,
   emptyText,
   columns,
   className,
@@ -74,31 +85,32 @@ function TableBody<TItem extends { id: number | string }>({
           </TableCell>
         </TableRow>
       ) : data.length === 0 ? (
-        <tr>
+        <TableRow>
           <td colSpan={columns.length} className='text-center text-muted py-8'>
             {emptyText}
           </td>
-        </tr>
+        </TableRow>
       ) : (
         data.map((item) => (
-          <tr key={String(item.id)}>
+          <TableRow key={String(item.id)}>
             {columns.map((column) => {
               const cellValue = (
                 item[column.key] === undefined ? '' : item[column.key]
               ) as TItem[keyof TItem];
 
               return (
-                <td
+                <TableCell
                   key={`${String(item.id)}-${String(column.key)}`}
-                  className={clsx(column.className)}
+                  className={column.className}
+                  {...addSticky(column.sticky)}
                 >
                   {column.render
                     ? column.render(cellValue, item)
                     : String(cellValue)}
-                </td>
+                </TableCell>
               );
             })}
-          </tr>
+          </TableRow>
         ))
       )}
     </tbody>

@@ -7,6 +7,7 @@ export type TableColumn<TItem> = {
   header: string;
   sortable?: boolean;
   className?: string;
+  sticky?: number;
   render?: (value: TItem[keyof TItem], row: TItem) => ReactNode;
 };
 
@@ -31,8 +32,8 @@ export const Table = <TItem extends { id: number | string }>({
   className,
 }: TableProps<TItem>) => {
   return (
-    <div className='relative w-full overflow-x-auto'>
-      <table className={clsx('table w-full table-fixed', className)}>
+    <div className='relative w-full max-w-full overflow-x-auto'>
+      <table className={clsx('table min-w-max border-collapse', className)}>
         <TableHeader
           columns={columns}
           sortBy={sortBy}

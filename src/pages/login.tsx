@@ -3,7 +3,7 @@ import { Container } from '@/shared/ui';
 
 export const LoginPage = () => {
   return (
-    <Container className='w-120'>
+    <Container className='w-92 md:w-120'>
       <LoginForm />
     </Container>
   );
