@@ -2,6 +2,7 @@ import { type Product } from '@/entities/product';
 import { Table, type TableColumn, Pagination } from '@/shared/ui';
 import { useFiltersStore, useProductsQuery } from '../../model';
 import { APP_CONFIG } from '@/shared/config';
+import { Image } from '@/shared/ui';
 import clsx from 'clsx';
 
 const columns: TableColumn<Product>[] = [
@@ -9,13 +10,13 @@ const columns: TableColumn<Product>[] = [
     key: 'thumbnail',
     header: 'Фото',
     render: (value, row) => (
-      <img
+      <Image
         src={String(value)}
         alt={row.title}
         className='w-12 h-12 object-cover rounded'
       />
     ),
-    sticky: 0
+    sticky: 0,
   },
   { key: 'title', header: 'Название', sortable: true, sticky: 48 },
   { key: 'brand', header: 'Бренд', sortable: true },
@@ -54,7 +55,12 @@ export const ProductsTable = ({ className }: { className?: string }) => {
   };
 
   return (
-    <div className={clsx(className, 'w-full min-w-0 max-w-full flex flex-col gap-4')}>
+    <div
+      className={clsx(
+        className,
+        'w-full min-w-0 max-w-full flex flex-col gap-4',
+      )}
+    >
       <Table
         data={productsQuery.data?.products ?? []}
         columns={columns}

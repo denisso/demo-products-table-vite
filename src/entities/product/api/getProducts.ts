@@ -28,7 +28,7 @@ export const getProducts = async ({
 }: GetProductsRequestParams): Promise<GetProductsResponse> => {
   const params = new URLSearchParams();
   const skip = (currentPage - 1) * limit;
-  
+
   if (Array.isArray(select)) {
     params.set('select', String(select));
   }

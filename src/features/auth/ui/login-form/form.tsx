@@ -1,11 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  FormField,
-  FormFields,
-  PasswordInput,
-  Checkbox,
-} from '@/shared/ui';
+import { FormField, FormFields, PasswordInput, Checkbox } from '@/shared/ui';
 import { LoginInput } from '@/features/auth/ui/login-input/Login';
 import { toastApi } from '@/shared/lib/toast';
 import { LoginFormHeader } from './Header';

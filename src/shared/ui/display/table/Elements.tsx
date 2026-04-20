@@ -38,7 +38,11 @@ function TableHeader<TItem extends { id: number | string }>({
 
           const sticky = stickyColumnProps(column.sticky);
           return (
-            <TableHead key={columnKey} className={sticky.className} style={sticky.style}>
+            <TableHead
+              key={columnKey}
+              className={sticky.className}
+              style={sticky.style}
+            >
               {column.sortable ? (
                 <button
                   type='button'

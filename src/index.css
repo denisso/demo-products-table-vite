@@ -36,6 +36,11 @@
   --noise: 0;
 }
 
+@utility skeleton-pulse {
+  @apply animate-pulse;
+  border-radius: var(--radius-box);
+}
+
 @utility text-muted {
   color: oklch(from var(--color-base-content) calc(l + 0.43) c h) !important;
 }
@@ -50,10 +55,10 @@
   outline-color: oklch(from var(--color-primary) calc(l + 0.6) c h) !important;
 }
 
-@layer utilities {
-  .no-interaction {
-    @apply pointer-events-none cursor-not-allowed select-none;
-  }
+@utility no-interaction {
+  pointer-events: none;
+  cursor: not-allowed;
+  user-select: none;
 }
 
 /* отключить выделение элемента по умолчанию */
@@ -70,6 +75,8 @@
   }
 }
 
-html, body, #root {
+html,
+body,
+#root {
   @apply max-w-full overflow-x-hidden;
 }

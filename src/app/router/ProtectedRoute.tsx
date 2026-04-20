@@ -7,8 +7,7 @@ export function ProtectedRoute() {
 
   if (location.pathname == '/login') {
     if (token) return <Navigate to='/' replace />;
-  }
-  else{
+  } else {
     if (!token) return <Navigate to='/login' replace />;
   }
   return <Outlet />;

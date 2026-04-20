@@ -1,5 +1,5 @@
 import { ICON_PATH } from '@/shared/config';
-
+import { Image } from '@/shared/ui/display/image';
 type ProxyImageProps = Omit<
   React.ComponentProps<'img'>,
   'src' | 'alt' | 'height' | 'width'
@@ -21,13 +21,7 @@ export const Icon = ({
 }: ProxyImageProps) => {
   const _src = src ? src : filename ? ICON_PATH[filename] : '';
 
-  if (width === 'auto' || height === 'auto') {
-    return (
-      <img src={_src} alt={alt ?? ''} style={{ width, height }} {...rest} />
-    );
-  }
-
   return (
-    <img src={_src} alt={alt ?? ''} width={width} height={height} {...rest} />
+    <Image src={_src} alt={alt ?? ''} width={width} height={height} {...rest} />
   );
 };

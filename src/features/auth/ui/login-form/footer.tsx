@@ -1,7 +1,6 @@
 import { LoadingButton, Link } from '@/shared/ui';
 
-
-export const LoginFormFooter = ({isPending}:{isPending: boolean}) => {
+export const LoginFormFooter = ({ isPending }: { isPending: boolean }) => {
   return (
     <div className='flex flex-col gap-4'>
       <LoadingButton

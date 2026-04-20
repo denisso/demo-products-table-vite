@@ -12,5 +12,3 @@ export interface Product {
   stock: number;
   discountPercentage: number;
 }
-
-

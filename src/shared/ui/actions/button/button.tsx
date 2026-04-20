@@ -42,7 +42,9 @@ export const LoadingButton = ({
   return (
     <Button {...rest}>
       {loading && (
-        <span className={`loading loading-spinner text-neutral w[${ICON_CONFIG.ICON_WIDTH_IN_CTRL}]`}></span>
+        <span
+          className={`loading loading-spinner text-neutral w[${ICON_CONFIG.ICON_WIDTH_IN_CTRL}]`}
+        ></span>
       )}
       {children}
     </Button>

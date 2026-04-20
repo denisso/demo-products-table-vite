@@ -6,7 +6,7 @@ const icons = [
   'logo',
   'password',
   'search',
-  'logout'
+  'logout',
 ] as const;
 
 type Dict = Record<(typeof icons)[number], string>;
