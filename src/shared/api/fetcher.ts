@@ -1,3 +1,4 @@
+import { tokenApi } from '@/shared/lib/token';
 // Обертка для fwtch, немного упрощает работу с типом данных и ошибок
 
 const BASE_URL = 'https://dummyjson.com';
@@ -26,6 +27,13 @@ export async function fetcher<T = unknown>(
       'Content-Type': 'application/json',
       ...(processedOptions.headers as Record<string, string>),
     };
+  }
+
+  const token = tokenApi.getToken();
+  if (typeof token === 'string') {
+    const headers = new Headers(processedOptions.headers);
+    headers.set('Authorization', `Bearer ${token}`);
+    processedOptions.headers = headers;
   }
 
   const response = await fetch(BASE_URL + url, processedOptions as RequestInit);

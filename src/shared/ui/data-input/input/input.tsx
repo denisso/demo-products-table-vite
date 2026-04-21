@@ -12,7 +12,7 @@ const colorMap: Record<Color, string> = {
 };
 
 type InputProps = {
-  type: 'search' | 'text' | 'password';
+  type: 'search' | 'text' | 'password' | 'number';
   placeholder?: string;
   color?: Color;
   leftIcon?: React.ReactNode;
@@ -62,6 +62,13 @@ export type InputPropsShared = Omit<
 > &
   Pick<InputProps, 'color'>;
 
+type InputWithClearTextProps = InputPropsShared & {
+  ref?: React.ForwardedRef<HTMLInputElement>;
+} & {
+  icon?: keyof typeof ICON_PATH;
+  iconText?: string;
+} & Partial<Pick<InputProps, 'type'>>;
+
 export const InputWithClearText = ({
   color,
   placeholder,
@@ -69,11 +76,9 @@ export const InputWithClearText = ({
   icon,
   iconText,
   onChange,
+  type = 'text',
   ...rest
-}: InputPropsShared & { ref?: React.ForwardedRef<HTMLInputElement> } & {
-  icon: keyof typeof ICON_PATH;
-  iconText: string;
-}) => {
+}: InputWithClearTextProps) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [isShowClear, setIsShowClear] = React.useState(false);
 
@@ -104,15 +109,17 @@ export const InputWithClearText = ({
   return (
     <Input
       leftIcon={
-        <Icon
-          filename={icon}
-          alt={iconText}
-          width={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
-          height={'auto'}
-          className='opacity-30'
-        />
+        icon && (
+          <Icon
+            filename={icon}
+            alt={iconText}
+            width={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
+            height={'auto'}
+            className='opacity-30'
+          />
+        )
       }
-      type='text'
+      type={type}
       placeholder={placeholder || 'Логин'}
       color={color}
       ref={inputRef}
@@ -134,49 +141,13 @@ export const InputWithClearText = ({
   );
 };
 
-export const PasswordInput = React.forwardRef<
-  HTMLInputElement,
-  InputPropsShared
->(({ color, placeholder, autoComplete, ...rest }, ref) => {
-  const [hide, setHide] = React.useState(true);
-  return (
-    <Input
-      leftIcon={
-        <Icon
-          filename='password'
-          alt='Пароль'
-          width={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
-          height={'auto'}
-          className='opacity-30'
-        />
-      }
-      type={hide ? 'password' : 'text'}
-      placeholder={placeholder || 'Пароль'}
-      color={color}
-      ref={ref}
-      autoComplete={autoComplete ? autoComplete : 'new-password'}
-      {...rest}
-      rightIcon={
-        <Icon
-          filename={hide ? 'eye-off' : 'eye'}
-          alt='Пароль'
-          width={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
-          height={'auto'}
-          className='cursor-pointer opacity-30'
-          onClick={() => setHide((prev) => !prev)}
-        />
-      }
-    />
-  );
-});
+type TextInputProps = InputPropsShared & { type: 'number' | 'text' };
 
-PasswordInput.displayName = 'PasswordInput';
-
-export const TextInput = React.forwardRef<HTMLInputElement, InputPropsShared>(
-  ({ color, placeholder, ...rest }, ref) => (
-    <Input
+export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
+  ({ color, placeholder, type, ...rest }, ref) => (
+    <InputWithClearText
       placeholder={placeholder}
-      type='text'
+      type={type}
       color={color}
       ref={ref}
       {...rest}

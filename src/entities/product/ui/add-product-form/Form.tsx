@@ -1,8 +1,7 @@
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormField, FormFields, LoadingButton, TextInput } from '@/shared/ui';
-import { addProduct } from '../../api';
-import { toastApi } from '@/shared/lib/toast';
-import type { FetchError } from '@/shared/api';
+import { useAddProduct } from '@/entities/product/model';
 
 type AddProductFormData = {
   title: string;
@@ -12,7 +11,11 @@ type AddProductFormData = {
   rating: string;
 };
 
-export const AddProductForm = () => {
+type AddProductFormProps = {
+  onSuccess?: () => void;
+};
+
+export const AddProductForm = ({ onSuccess }: AddProductFormProps) => {
   const {
     register,
     handleSubmit,
@@ -20,6 +23,7 @@ export const AddProductForm = () => {
     setError,
     reset,
   } = useForm<AddProductFormData>();
+  const m = useAddProduct();
 
   const onSubmit = async (data: AddProductFormData) => {
     const price = Number(data.price);
@@ -34,33 +38,21 @@ export const AddProductForm = () => {
       setError('rating', { message: 'Введите корректный рейтинг' });
       return;
     }
-
-    try {
-      const response = await addProduct({
-        title: data.title.trim(),
-        brand: data.brand.trim(),
-        category: data.category.trim(),
-        price,
-        rating,
-      });
-
-      console.log(response);
-      toastApi.addToast({
-        message: `Товар "${response.title}" добавлен`,
-        color: 'success',
-      });
-      reset();
-    } catch (error) {
-      const status = (error as FetchError).status;
-      toastApi.addToast({
-        message:
-          typeof status === 'number'
-            ? `Ошибка добавления товара (HTTP ${status})`
-            : 'Сетевая ошибка. Попробуйте позже.',
-        color: 'error',
-      });
-    }
+    m.mutate({
+      title: data.title.trim(),
+      brand: data.brand.trim(),
+      category: data.category.trim(),
+      price,
+      rating,
+    });
   };
+
+  React.useEffect(() => {
+    if (m.isSuccess) {
+      reset();
+      onSuccess?.();
+    }
+  }, [reset, m.isSuccess, onSuccess]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
@@ -92,11 +84,7 @@ export const AddProductForm = () => {
           error={errors.category}
           required
           render={(fieldProps) => (
-            <TextInput
-              {...fieldProps}
-              type='text'
-              placeholder='smartphones'
-            />
+            <TextInput {...fieldProps} type='text' placeholder='smartphones' />
           )}
         />
         <FormField
@@ -121,11 +109,11 @@ export const AddProductForm = () => {
         />
       </FormFields>
       <LoadingButton
-        loading={isSubmitting}
+        loading={isSubmitting || m.isPending}
         type='submit'
         color='primary'
         className='mt-4 w-full'
-        disabled={isSubmitting}
+        disabled={isSubmitting || m.isPending}
       >
         {isSubmitting ? 'Добавление...' : 'Добавить товар'}
       </LoadingButton>

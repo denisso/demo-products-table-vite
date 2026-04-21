@@ -5,6 +5,7 @@ import { userApi } from '@/entities/user';
 import { login, type LoginResponse } from '../api';
 import type { FetchError } from '@/shared/api';
 import { APP_CONFIG } from '@/shared/config';
+import { toastApi } from '@/shared/lib/toast';
 
 interface LoginVariables {
   username: string;
@@ -16,6 +17,9 @@ export const useLogin = () => {
   const mutation = useMutation<LoginResponse, FetchError, LoginVariables>({
     mutationFn: ({ username, password }) => {
       return login(username, password);
+    },
+    scope: {
+      id: 'login-scope',
     },
     onSuccess: (response, variables) => {
       tokenApi.setToken(response.accessToken);
@@ -29,6 +33,17 @@ export const useLogin = () => {
         localStorage.removeItem(APP_CONFIG.ACCESS_TOKEN_NAME_IN_STORAGE);
       }
       router.navigate('/');
+    },
+    onError: (error) => {
+      let message = 'Сетевая ошибка. Попробуйте позже.';
+      if (error.status == 400) {
+        message = 'Ошибка авторизации. Неправильный логин или пароль';
+      }
+      toastApi.addToast({
+        message,
+        color: 'error',
+      });
+      return error;
     },
   });
 

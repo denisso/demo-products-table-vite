@@ -17,6 +17,7 @@ export const useTokenStore = create<TokenState>()((set) => ({
 }));
 
 export const tokenApi = {
+  getToken: () => useTokenStore.getState().token,
   setToken: (token: string) => useTokenStore.getState().setToken(token),
   clearToken: () => {
     useTokenStore.getState().clearToken();

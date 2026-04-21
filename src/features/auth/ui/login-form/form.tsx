@@ -1,8 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormField, FormFields, PasswordInput, Checkbox } from '@/shared/ui';
-import { LoginInput } from '@/features/auth/ui/login-input/Login';
-import { toastApi } from '@/shared/lib/toast';
+import { FormField, FormFields, Checkbox } from '@/shared/ui';
+import { PasswordInput, LoginInput } from '@/features/auth/ui';
 import { LoginFormHeader } from './Header';
 import { useLogin } from '@/features/auth';
 import { LoginFormFooter } from './Footer';
@@ -36,10 +35,6 @@ export function LoginForm() {
       setError('root', { message: AUTH_WRONG });
       return;
     }
-    toastApi.addToast({
-      message: 'Сетевая ошибка. Попробуйте позже.',
-      color: 'error',
-    });
   }, [m.error, setError]);
 
   const handleErrors = () => {
