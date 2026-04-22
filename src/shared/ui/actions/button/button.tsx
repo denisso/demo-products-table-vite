@@ -11,6 +11,7 @@ const colorMap: Record<Color, string> = {
 
 type Props = {
   color?: Color;
+  icon?: React.ReactNode;
 } & React.ComponentProps<'button'>;
 
 export const Button = ({
@@ -41,12 +42,14 @@ export const LoadingButton = ({
 }: LoadingButtonType) => {
   return (
     <Button {...rest}>
-      {loading && (
-        <span
-          className={`loading loading-spinner text-neutral w[${ICON_CONFIG.ICON_WIDTH_IN_CTRL}]`}
-        ></span>
-      )}
-      {children}
+      <div className='flex gap-2 items-center'>
+        {loading && (
+          <span
+            className={`loading loading-spinner text-neutral w[${ICON_CONFIG.ICON_WIDTH_IN_CTRL}]`}
+          ></span>
+        )}
+        {children}
+      </div>
     </Button>
   );
 };

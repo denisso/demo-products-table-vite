@@ -39,7 +39,7 @@ export const Input = React.forwardRef<
     const colorClass = colorMap[color] || colorMap.neutral;
     return (
       <div className={clsx('input w-full', colorClass)}>
-        <div className='w-6'>{leftIcon}</div>
+        {leftIcon && <div className='w-6'>{leftIcon}</div>}
         <input
           type={type}
           className={clsx('grow', className)}
