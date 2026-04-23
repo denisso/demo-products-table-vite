@@ -36,6 +36,10 @@
   --noise: 0;
 }
 
+:root {
+  --width-ctrl-icon: 26px;
+}
+
 @utility skeleton-pulse {
   @apply animate-pulse;
   border-radius: var(--radius-box);

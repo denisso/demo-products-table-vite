@@ -8,12 +8,7 @@ type ModalProps = {
   className?: string;
 };
 
-export function Modal({
-  open,
-  onClose,
-  children,
-  className,
-}: ModalProps) {
+export function Modal({ open, onClose, children, className }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {

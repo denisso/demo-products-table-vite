@@ -10,11 +10,13 @@ const columns: TableColumn<Product>[] = [
     key: 'thumbnail',
     header: 'Фото',
     render: (value, row) => (
-      <Image
-        src={String(value)}
-        alt={row.title}
-        className='w-12 h-12 object-cover rounded'
-      />
+      <div className='w-12 h-12'>
+        <Image
+          src={String(value)}
+          alt={row.title}
+          className='object-cover rounded'
+        />
+      </div>
     ),
     sticky: 0,
   },

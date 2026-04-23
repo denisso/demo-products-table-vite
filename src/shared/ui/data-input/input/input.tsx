@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { type Color } from '@/shared/types/color';
 import { Icon } from '../../display';
-import { ICON_PATH, ICON_CONFIG } from '@/shared/config';
+import { ICON_PATH } from '@/shared/config';
 
 // классы которые будут сгенерированы
 const colorMap: Record<Color, string> = {
@@ -39,7 +39,9 @@ export const Input = React.forwardRef<
     const colorClass = colorMap[color] || colorMap.neutral;
     return (
       <div className={clsx('input w-full', colorClass)}>
-        {leftIcon && <div className='w-6'>{leftIcon}</div>}
+        {leftIcon && (
+          <div className='opacity-30 w-(--width-ctrl-icon)'>{leftIcon}</div>
+        )}
         <input
           type={type}
           className={clsx('grow', className)}
@@ -48,7 +50,9 @@ export const Input = React.forwardRef<
           autoComplete={autoComplete ? autoComplete : 'off'}
           {...rest}
         />
-        {rightIcon}
+        {rightIcon && (
+          <div className='opacity-30 w-(--width-ctrl-icon)'>{rightIcon}</div>
+        )}
       </div>
     );
   },
@@ -74,7 +78,6 @@ export const InputWithClearText = ({
   placeholder,
   ref,
   icon,
-  iconText,
   onChange,
   type = 'text',
   ...rest
@@ -108,17 +111,7 @@ export const InputWithClearText = ({
 
   return (
     <Input
-      leftIcon={
-        icon && (
-          <Icon
-            filename={icon}
-            alt={iconText}
-            width={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
-            height={'auto'}
-            className='opacity-30'
-          />
-        )
-      }
+      leftIcon={icon && <Icon filename={icon} />}
       type={type}
       placeholder={placeholder || 'Логин'}
       color={color}
@@ -130,9 +123,7 @@ export const InputWithClearText = ({
           <Icon
             filename='close'
             alt='Очистка текста'
-            width={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
-            height={'auto'}
-            className='cursor-pointer opacity-30'
+            className='cursor-pointer'
             onClick={handleClear}
           />
         )

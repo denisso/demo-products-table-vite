@@ -1,13 +1,18 @@
 import React from 'react';
 import { Button, Modal } from '@/shared/ui';
 import { AddProductForm } from '../add-product-form';
+import { Icon } from '@/shared/ui';
 
 export const AddProductButton = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
     <>
-      <Button color='primary' onClick={() => setOpen(true)}>
+      <Button
+        color='primary'
+        onClick={() => setOpen(true)}
+        icon={<Icon filename='plus' />}
+      >
         Добавить товар
       </Button>
       <Modal

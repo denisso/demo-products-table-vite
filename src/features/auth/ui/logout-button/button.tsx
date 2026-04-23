@@ -1,6 +1,6 @@
 import { Icon } from '@/shared/ui';
 import { router } from '@/app/router';
-import { APP_CONFIG, ICON_CONFIG } from '@/shared/config';
+import { APP_CONFIG } from '@/shared/config';
 import { tokenApi } from '@/shared/lib/token';
 
 export const LogoutButton = () => {
@@ -10,12 +10,8 @@ export const LogoutButton = () => {
     router.navigate('/login');
   };
   return (
-    <Icon
-      filename='logout'
-      className='cursor-pointer'
-      height='auto'
-      width={ICON_CONFIG.ICON_WIDTH_IN_CTRL}
-      onClick={onClick}
-    />
+    <div className='h-(--width-ctrl-icon) w-(--width-ctrl-icon)'>
+      <Icon filename='logout' className='cursor-pointer' onClick={onClick} />
+    </div>
   );
 };

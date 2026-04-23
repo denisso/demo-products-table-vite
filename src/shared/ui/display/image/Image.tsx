@@ -1,35 +1,27 @@
 import React from 'react';
 
-export function Image({
-  src,
-  alt,
-  className = '',
-  width,
-  height,
-  ...rest
-}: React.ComponentProps<'img'>) {
-  const [loaded, setLoaded] = React.useState(false);
+export function Image({ src, alt, ...rest }: React.ComponentProps<'img'>) {
+  const [loaded, setLoaded] = React.useState<'initial' | 'loaded'>('initial');
 
   const handleLoad = () => {
-    setLoaded(true);
+    setLoaded('loaded');
   };
 
   return (
-    <div
-      className={
-        (!loaded ? 'skeleton' : '') +
-        (' flex justify-center items-center ' + className).trimEnd()
-      }
-      style={{ width, height }}
-    >
+    <>
       <img
         src={src}
         alt={alt}
         loading='lazy'
         onLoad={handleLoad}
         {...rest}
-        className={`w-full h-full object-contain transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+        className={` object-contain transition-opacity duration-300 ${loaded == 'loaded' ? 'opacity-100 w-full h-full' : 'opacity-0 w-0 h-0'}`}
       />
-    </div>
+      {loaded == 'initial' ? (
+        <div className='skeleton animate-pulse flex justify-center items-center h-full w-full' />
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
