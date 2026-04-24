@@ -63,6 +63,15 @@ export const ProductsTable = ({ className }: { className?: string }) => {
         'w-full min-w-0 max-w-full flex flex-col gap-4',
       )}
     >
+      <div className='h-2'>
+        <progress
+          className={clsx(
+            'progress progress-primary w-full transition-opacity',
+            productsQuery.isFetching ? 'opacity-100' : 'opacity-0',
+          )}
+          aria-label='Загрузка товаров'
+        />
+      </div>
       <Table
         data={productsQuery.data?.products ?? []}
         columns={columns}
