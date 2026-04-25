@@ -7,7 +7,6 @@ export const LoginInput = React.forwardRef<HTMLInputElement, InputPropsShared>(
       <InputWithClearText
         ref={ref}
         icon={'login'}
-        iconText='Логин'
         placeholder={placeholder ? placeholder : 'Логин'}
         color={color}
         {...rest}

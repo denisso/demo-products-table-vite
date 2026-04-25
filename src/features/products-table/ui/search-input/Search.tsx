@@ -8,7 +8,6 @@ export const SearchInput = ({ className, ...rest }: InputPropsShared) => {
       onChange={(event) => setSearch(event.target.value)}
       className={className}
       icon={'search'}
-      iconText='Поиск'
       placeholder='Поиск товара'
       color='neutral'
       {...rest}

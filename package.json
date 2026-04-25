@@ -5,7 +5,7 @@
   "type": "module",
   "author": "KUROCHKIN DENIS",
   "license": "MIT",
-  "homepage": "https://denisso.github.io/demo-products-table-vite"
+  "homepage": "https://denisso.github.io/demo-products-table-vite",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

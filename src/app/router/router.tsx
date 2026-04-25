@@ -14,5 +14,5 @@ export const router = createBrowserRouter(
       children: [{ path: '/', element: <ProductsPage /> }],
     },
   ],
-  { basename: '/demo-products-table-vite' },
+  { basename: import.meta.env.BASE_URL },
 );

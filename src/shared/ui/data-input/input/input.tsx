@@ -72,7 +72,6 @@ type InputWithClearTextProps = InputPropsShared & {
   ref?: React.ForwardedRef<HTMLInputElement>;
 } & {
   icon?: keyof typeof ICON_PATH;
-  iconText?: string;
 } & Partial<Pick<InputProps, 'type'>>;
 
 export const InputWithClearText = ({

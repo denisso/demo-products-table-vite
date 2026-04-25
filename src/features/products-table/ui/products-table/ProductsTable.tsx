@@ -9,7 +9,6 @@ const columns: TableColumn<Product>[] = [
   {
     key: 'thumbnail',
     header: 'Фото',
-    className: '',
     render: (value, row) => (
       <div className='w-12 h-12'>
         <Image
@@ -80,7 +79,6 @@ export const ProductsTable = ({ className }: { className?: string }) => {
         order={order}
         isLoading={productsQuery.isLoading}
         emptyText='Товары не найдены'
-        className='table-fixed'
         onSort={handleSort}
       />
       <Pagination

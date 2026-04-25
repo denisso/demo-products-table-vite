@@ -12,6 +12,6 @@ const icons = [
 
 type Dict = Record<(typeof icons)[number], string>;
 export const ICON_PATH = icons.reduce<Dict>((a, icon) => {
-  a[icon] = `/icons/${icon}.svg`;
+  a[icon] = `${import.meta.env.BASE_URL}/icons/${icon}.svg`;
   return a;
 }, {} as Dict);
