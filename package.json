@@ -1,17 +1,20 @@
 {
-  "name": "vite-project",
+  "name": "demo-products-table-vite",
   "private": false,
   "version": "0.0.0",
   "type": "module",
   "author": "KUROCHKIN DENIS",
   "license": "MIT",
+  "homepage": "https://denisso.github.io/demo-products-table-vite"
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write",
-    "format:check": "prettier --check"
+    "format:check": "prettier --check",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",

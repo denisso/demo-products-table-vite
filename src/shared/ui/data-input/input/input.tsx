@@ -51,7 +51,9 @@ export const Input = React.forwardRef<
           {...rest}
         />
         {rightIcon && (
-          <div className='opacity-30 w-(--width-ctrl-icon)'>{rightIcon}</div>
+          <div className='opacity-30 w-(--width-ctrl-icon) cursor-pointer'>
+            {rightIcon}
+          </div>
         )}
       </div>
     );
@@ -91,6 +93,7 @@ export const InputWithClearText = ({
     if (typeof onChange == 'function') {
       onChange(event);
     }
+    console.log('InputWithClearText.onChange', event.target.value);
     setIsShowClear(!!event.target.value);
   };
 
