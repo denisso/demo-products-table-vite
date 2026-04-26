@@ -8,6 +8,15 @@ import clsx from 'clsx';
 import React from 'react';
 import type { Color } from '@/shared/types';
 
+export type FieldRenderProps = {
+  ref: (instance: HTMLInputElement | null) => void;
+  name: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+  id: string;
+  color: Color;
+};
+
 interface FormFieldProps<TFormData extends FieldValues> {
   label: string;
   isLabelMuted?: boolean;
@@ -19,14 +28,7 @@ interface FormFieldProps<TFormData extends FieldValues> {
   layout?: 'horizontal' | 'vertical';
   className?: string;
   color?: Color;
-  render: (fieldProps: {
-    ref: (instance: HTMLInputElement | null) => void;
-    name: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-    id: string;
-    color: Color;
-  }) => React.ReactElement;
+  render: (fieldProps: FieldRenderProps) => React.ReactElement;
 }
 
 const requiredMessage = {

@@ -1,6 +1,6 @@
 import { ToastsContainer } from '../shared/ui/feedback';
 import { RouterProvider } from 'react-router-dom';
-import { router } from '@/app/router/Router';
+import { router } from '@/app/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TokenProvider } from '../features/auth';
 

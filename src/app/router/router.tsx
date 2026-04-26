@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
-import { LoginPage } from '@/pages/Login';
-import { ProductsPage } from '@/pages';
+import { ProductsPage, LoginPage } from '@/pages';
 
 export const router = createBrowserRouter(
   [

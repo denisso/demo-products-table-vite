@@ -1,6 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormField, FormFields, LoadingButton, TextInput } from '@/shared/ui';
+import {
+  FormField,
+  type FieldRenderProps,
+  FormFields,
+  LoadingButton,
+  TextInput,
+} from '@/shared/ui';
 import { useAddProduct } from '@/entities/product/model';
 
 type AddProductFormData = {
@@ -63,7 +69,7 @@ export const AddProductForm = ({ onSuccess }: AddProductFormProps) => {
           register={register}
           error={errors.title}
           required
-          render={(fieldProps) => (
+          render={(fieldProps: FieldRenderProps) => (
             <TextInput {...fieldProps} type='text' placeholder='iPhone 15' />
           )}
         />
@@ -73,7 +79,7 @@ export const AddProductForm = ({ onSuccess }: AddProductFormProps) => {
           register={register}
           error={errors.brand}
           required
-          render={(fieldProps) => (
+          render={(fieldProps: FieldRenderProps) => (
             <TextInput {...fieldProps} type='text' placeholder='Apple' />
           )}
         />
@@ -83,7 +89,7 @@ export const AddProductForm = ({ onSuccess }: AddProductFormProps) => {
           register={register}
           error={errors.category}
           required
-          render={(fieldProps) => (
+          render={(fieldProps: FieldRenderProps) => (
             <TextInput {...fieldProps} type='text' placeholder='smartphones' />
           )}
         />

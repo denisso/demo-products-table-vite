@@ -1,2 +1,2 @@
-export { FormField } from './Field';
-export { FormFields } from './Fields';
+export * from './Field';
+export * from './Fields';

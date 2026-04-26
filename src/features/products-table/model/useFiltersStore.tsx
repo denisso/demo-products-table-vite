@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { debounce } from '@/shared/lib/debounce';
 
 interface FiltersStore {
   sortBy: string;
@@ -10,21 +11,24 @@ interface FiltersStore {
   setSearch: (q: string) => void;
 }
 
-export const useFiltersStore = create<FiltersStore>()((set) => ({
-  sortBy: 'title',
-  order: 'asc',
-  currentPage: 1,
-  search: '',
-  setSort: (sortBy, order) => {
-    set({ sortBy, order, currentPage: 1 });
-  },
-  setPage: (page) => {
-    set({ currentPage: page });
-  },
-  setSearch: (q) => {
-    set({ search: q, currentPage: 1 });
-  },
-}));
+export const useFiltersStore = create<FiltersStore>()((_set) => {
+  const set = debounce((state: Partial<FiltersStore>) => _set(state));
+  return {
+    sortBy: 'title',
+    order: 'asc',
+    currentPage: 1,
+    search: '',
+    setSort: (sortBy, order) => {
+      set({ sortBy, order, currentPage: 1 });
+    },
+    setPage: (page) => {
+      set({ currentPage: page });
+    },
+    setSearch: (q) => {
+      set({ search: q, currentPage: 1 });
+    },
+  };
+});
 
 export const productsFilterApi = {
   setSort: (sortBy: string, order: 'asc' | 'desc') => {
