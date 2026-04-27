@@ -16,7 +16,7 @@ const AUTH_WRONG = 'AUTH_WRONG';
 
 export function LoginForm() {
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
     setError,
@@ -50,18 +50,16 @@ export function LoginForm() {
         <FormField
           label='Логин'
           name='username'
-          register={register}
+          control={control}
           onChange={handleErrors}
-          error={errors.username}
           required
           render={(fieldProps) => <LoginInput {...fieldProps} />}
         />
         <FormField
           label='Пароль'
           name='password'
-          register={register}
+          control={control}
           onChange={handleErrors}
-          error={errors.password}
           required
           render={(fieldProps) => <PasswordInput {...fieldProps} />}
         />
@@ -69,8 +67,7 @@ export function LoginForm() {
           label='Запомнить данные'
           isLabelMuted
           name='remember'
-          register={register}
-          error={errors.remember}
+          control={control}
           layout='horizontal'
           color={'primary'}
           render={(fieldProps) => <Checkbox {...fieldProps} />}

@@ -1,6 +1,4 @@
-export function debounce<
-  T extends (...args: Parameters<T>) => void
->(
+export function debounce<T extends (...args: Parameters<T>) => void>(
   func: T,
   delay: number = 200,
 ): (this: ThisParameterType<T>, ...args: Parameters<T>) => void {

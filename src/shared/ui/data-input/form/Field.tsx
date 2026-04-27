@@ -1,29 +1,29 @@
-import type {
-  FieldValues,
-  Path,
-  UseFormRegister,
-  FieldError,
+import React from 'react';
+import {
+  Controller,
+  type Control,
+  type FieldValues,
+  type Path,
 } from 'react-hook-form';
 import clsx from 'clsx';
-import React from 'react';
 import type { Color } from '@/shared/types';
 
 export type FieldRenderProps = {
-  ref: (instance: HTMLInputElement | null) => void;
-  name: string;
+  value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur: React.FocusEventHandler<HTMLInputElement>;
+  name: string;
   id: string;
   color: Color;
+  ref: React.RefCallback<HTMLInputElement>; // для прямого доступа к элементу
 };
 
 interface FormFieldProps<TFormData extends FieldValues> {
   label: string;
   isLabelMuted?: boolean;
   name: Path<TFormData>;
-  register: UseFormRegister<TFormData>;
-  onChange?: (event: React.ChangeEvent<HTMLElement>) => void;
-  error?: FieldError;
+  control: Control<TFormData>;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // можно вызывать с новым значением
   required?: boolean | string;
   layout?: 'horizontal' | 'vertical';
   className?: string;
@@ -38,9 +38,8 @@ const requiredMessage = {
 export function FormField<TFormData extends FieldValues>({
   label,
   name,
-  register,
+  control,
   onChange,
-  error,
   required = false,
   render,
   layout = 'vertical',
@@ -50,56 +49,73 @@ export function FormField<TFormData extends FieldValues>({
 }: FormFieldProps<TFormData>) {
   const uniqueId = React.useId();
   const id = `${String(name)}-${uniqueId}`;
-  const validationRules = required ? requiredMessage : {};
-
-  const {
-    ref,
-    onChange: _onChangeReg,
-    onBlur,
-  } = register(name, validationRules);
-
-  const _onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    _onChangeReg(event);
-    if (typeof onChange == 'function') {
-      onChange(event);
-    }
-  };
-  const _color: Color = error ? 'error' : color ? color : 'neutral';
-  const Input = render({
-    ref,
-    name,
-    onChange: _onChange,
-    onBlur,
-    id,
-    color: _color,
-  });
-  const labelClass = 'font-medium no-interaction';
+  const rules = required ? requiredMessage : {};
 
   return (
-    <>
-      <div className={className}>
-        {layout === 'vertical' ? (
-          <div className='flex flex-col gap-2'>
-            <label className={labelClass} htmlFor={id}>
-              {label}
-            </label>
-            {Input}
+    <Controller
+      name={name}
+      control={control}
+      rules={rules}
+      render={({ field, fieldState }) => {
+        // Объединяем внешний onChange и field.onChange
+        const handleChange = (
+          eventOrValue: React.ChangeEvent<HTMLInputElement>,
+        ) => {
+          // Передаём значение в react-hook-form
+          field.onChange(eventOrValue);
+          // Если передан внешний обработчик, вызываем его с новым значением
+          if (onChange) {
+            onChange(eventOrValue);
+          }
+        };
+
+        const finalColor: Color = fieldState.error
+          ? 'error'
+          : color
+            ? color
+            : 'neutral';
+
+        const fieldProps: FieldRenderProps = {
+          ref: field.ref,
+          name: field.name,
+          value: field.value ?? '', // field.value гарантированно строка
+          onChange: handleChange,
+          onBlur: field.onBlur,
+          id,
+          color: finalColor,
+        };
+
+        const Input = render(fieldProps);
+        const labelClass = 'font-medium no-interaction';
+
+        return (
+          <div className={className}>
+            {layout === 'vertical' ? (
+              <div className='flex flex-col gap-2'>
+                <label className={labelClass} htmlFor={id}>
+                  {label}
+                </label>
+                {Input}
+              </div>
+            ) : (
+              <div className='flex items-center gap-2'>
+                {Input}
+                <label
+                  className={clsx(labelClass, { ['text-muted']: isLabelMuted })}
+                  htmlFor={id}
+                >
+                  {label}
+                </label>
+              </div>
+            )}
+            <div className='h-4'>
+              {fieldState.error && (
+                <p className='label text-error'>{fieldState.error.message}</p>
+              )}
+            </div>
           </div>
-        ) : (
-          <div className='flex items-center gap-2'>
-            {Input}
-            <label
-              className={clsx(labelClass, { ['text-muted']: isLabelMuted })}
-              htmlFor={id}
-            >
-              {label}
-            </label>
-          </div>
-        )}
-        <div className='h-4'>
-          {error && <p className='label text-error'>{error.message}</p>}
-        </div>
-      </div>
-    </>
+        );
+      }}
+    />
   );
 }

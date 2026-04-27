@@ -23,9 +23,9 @@ type AddProductFormProps = {
 
 export const AddProductForm = ({ onSuccess }: AddProductFormProps) => {
   const {
-    register,
+    control,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     setError,
     reset,
   } = useForm<AddProductFormData>();
@@ -66,8 +66,7 @@ export const AddProductForm = ({ onSuccess }: AddProductFormProps) => {
         <FormField
           label='Название'
           name='title'
-          register={register}
-          error={errors.title}
+          control={control}
           required
           render={(fieldProps: FieldRenderProps) => (
             <TextInput {...fieldProps} type='text' placeholder='iPhone 15' />
@@ -76,8 +75,7 @@ export const AddProductForm = ({ onSuccess }: AddProductFormProps) => {
         <FormField
           label='Бренд'
           name='brand'
-          register={register}
-          error={errors.brand}
+          control={control}
           required
           render={(fieldProps: FieldRenderProps) => (
             <TextInput {...fieldProps} type='text' placeholder='Apple' />
@@ -86,8 +84,7 @@ export const AddProductForm = ({ onSuccess }: AddProductFormProps) => {
         <FormField
           label='Категория'
           name='category'
-          register={register}
-          error={errors.category}
+          control={control}
           required
           render={(fieldProps: FieldRenderProps) => (
             <TextInput {...fieldProps} type='text' placeholder='smartphones' />
@@ -96,8 +93,7 @@ export const AddProductForm = ({ onSuccess }: AddProductFormProps) => {
         <FormField
           label='Цена'
           name='price'
-          register={register}
-          error={errors.price}
+          control={control}
           required
           render={(fieldProps) => (
             <TextInput {...fieldProps} type='number' placeholder='999' />
@@ -106,8 +102,7 @@ export const AddProductForm = ({ onSuccess }: AddProductFormProps) => {
         <FormField
           label='Рейтинг'
           name='rating'
-          register={register}
-          error={errors.rating}
+          control={control}
           required
           render={(fieldProps) => (
             <TextInput {...fieldProps} type='number' placeholder='4.8' />
