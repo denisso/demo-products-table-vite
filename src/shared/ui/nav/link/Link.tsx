@@ -1,7 +1,7 @@
 import { type Color } from '../../../types/color';
 import clsx from 'clsx';
 import { Link as RouterLink } from 'react-router-dom';
-import './link.css';
+import './Link.css';
 
 // классы которые будут сгенерированы
 const colorMap: Record<Color, string> = {

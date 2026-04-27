@@ -1,6 +1,10 @@
 import { type Product } from '@/entities/product';
 import { Table, type TableColumn, Pagination } from '@/shared/ui';
-import { useFiltersStore, useProductsQuery } from '../../model';
+import {
+  useProductsQueryState,
+  productsQueryStateApi as qApi,
+  useProductsQuery,
+} from '../../model';
 import { APP_CONFIG } from '@/shared/config';
 import { Image } from '@/shared/ui';
 import clsx from 'clsx';
@@ -35,25 +39,21 @@ const columns: TableColumn<Product>[] = [
 ];
 
 export const ProductsTable = ({ className }: { className?: string }) => {
-  const { sortBy, order, currentPage, search, setSort, setPage } =
-    useFiltersStore();
+  const filter = useProductsQueryState();
 
   const productsQuery = useProductsQuery({
-    sortBy,
-    order,
-    currentPage,
-    search,
+    ...filter,
     limit: APP_CONFIG.TABLE_PAGE_LIMIT,
   });
 
   const total = productsQuery.data?.total ?? 0;
 
   const handleSort = (column: string) => {
-    if (sortBy === column) {
-      setSort(column, order === 'asc' ? 'desc' : 'asc');
+    if (filter.sortBy === column) {
+      qApi.setSort(column, filter.order === 'asc' ? 'desc' : 'asc');
       return;
     }
-    setSort(column, 'asc');
+    qApi.setSort(column, 'asc');
   };
 
   return (
@@ -75,17 +75,17 @@ export const ProductsTable = ({ className }: { className?: string }) => {
       <Table
         data={productsQuery.data?.products ?? []}
         columns={columns}
-        sortBy={sortBy}
-        order={order}
+        sortBy={filter.sortBy}
+        order={filter.order}
         isLoading={productsQuery.isLoading}
         emptyText='Товары не найдены'
         onSort={handleSort}
       />
       <Pagination
-        currentPage={currentPage}
+        currentPage={filter.currentPage}
         total={total}
         limit={APP_CONFIG.TABLE_PAGE_LIMIT}
-        setPage={setPage}
+        setPage={qApi.setPage}
         className='flex gap-2 justify-end'
       />
     </div>

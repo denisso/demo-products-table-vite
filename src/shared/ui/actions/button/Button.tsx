@@ -30,7 +30,7 @@ export const Button = ({
     >
       <div className='flex gap-2 items-center'>
         {icon && (
-          <div className='w-(--width-ctrl-icon) h-(--width-ctrl-icon)'>
+          <div className='w-(--width-ctrl-icon) h-(--width-ctrl-icon) [&>svg]:w-full [&>svg]:h-full'>
             {icon}
           </div>
         )}

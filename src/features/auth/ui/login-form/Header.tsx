@@ -1,10 +1,10 @@
-import { Icon } from '@/shared/ui/display/icon';
+import { LogoIcon } from '@/shared/assets/icons';
 
 export const LoginFormHeader = () => {
   return (
     <div className='flex flex-col mb-6 gap-6 items-center'>
-      <div className='w-13 h-13'>
-        <Icon filename='logo' />
+      <div className='w-13 h-13 [&>svg]:h-full [&>svg]:w-full'>
+        <LogoIcon />
       </div>
       <div className='flex flex-col items-center'>
         <div className='text-[2.5rem] font-medium'>Добро пожаловать!</div>

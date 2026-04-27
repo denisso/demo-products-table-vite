@@ -1,6 +1,6 @@
 import React from 'react';
 import { type InputPropsShared, Input } from '@/shared/ui';
-import { Icon } from '@/shared/ui';
+import { EyeOffIcon, EyeIcon, PasswordIcon } from '@/shared/assets/icons';
 
 export const PasswordInput = React.forwardRef<
   HTMLInputElement,
@@ -9,7 +9,7 @@ export const PasswordInput = React.forwardRef<
   const [hide, setHide] = React.useState(true);
   return (
     <Input
-      leftIcon={<Icon filename='password' alt='Пароль' />}
+      leftIcon={<PasswordIcon />}
       type={hide ? 'password' : 'text'}
       placeholder={placeholder || 'Пароль'}
       color={color}
@@ -17,12 +17,17 @@ export const PasswordInput = React.forwardRef<
       autoComplete={autoComplete ? autoComplete : 'new-password'}
       {...rest}
       rightIcon={
-        <Icon
-          filename={hide ? 'eye-off' : 'eye'}
-          alt='Пароль'
-          className='cursor-pointer'
-          onClick={() => setHide((prev) => !prev)}
-        />
+        hide ? (
+          <EyeOffIcon
+            className='cursor-pointer'
+            onClick={() => setHide((prev) => !prev)}
+          />
+        ) : (
+          <EyeIcon
+            className='cursor-pointer'
+            onClick={() => setHide((prev) => !prev)}
+          />
+        )
       }
     />
   );

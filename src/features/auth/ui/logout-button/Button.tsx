@@ -1,4 +1,4 @@
-import { Icon } from '@/shared/ui';
+import { LogoutIcon } from '@/shared/assets/icons';
 import { router } from '@/app/router';
 import { APP_CONFIG } from '@/shared/config';
 import { tokenApi } from '@/shared/lib/token';
@@ -11,7 +11,7 @@ export const LogoutButton = () => {
   };
   return (
     <div className='h-(--width-ctrl-icon) w-(--width-ctrl-icon)'>
-      <Icon filename='logout' className='cursor-pointer' onClick={onClick} />
+      <LogoutIcon className='cursor-pointer' onClick={onClick} />
     </div>
   );
 };

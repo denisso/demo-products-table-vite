@@ -1,4 +1,8 @@
-import { ProductsTable, SearchInput } from '@/features/products-table';
+import {
+  ProductsTable,
+  SearchInput,
+  RefreshButton,
+} from '@/features/products-table/ui';
 import { Container } from '@/shared/ui';
 import { LogoutButton } from '@/features/auth';
 import { AddProductButton } from '@/entities/product';
@@ -19,7 +23,10 @@ export const ProductsPage = () => {
       </div>
 
       <Container className='h-full w-full min-w-0 flex justify-between items-stretch'>
-        <AddProductButton />
+        <div className='flex justify-end gap-2'>
+          <RefreshButton /> <AddProductButton />
+        </div>
+
         <ProductsTable />
       </Container>
     </div>

@@ -1,8 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { type Color } from '@/shared/types/color';
-import { Icon } from '../../display';
-import { ICON_PATH } from '@/shared/config';
+import { CloseIcon } from '@/shared/assets/icons';
 
 // классы которые будут сгенерированы
 const colorMap: Record<Color, string> = {
@@ -71,14 +70,14 @@ export type InputPropsShared = Omit<
 type InputWithClearTextProps = InputPropsShared & {
   ref?: React.ForwardedRef<HTMLInputElement>;
 } & {
-  icon?: keyof typeof ICON_PATH;
+  Icon?: React.ReactNode;
 } & Partial<Pick<InputProps, 'type'>>;
 
 export const InputWithClearText = ({
   color,
   placeholder,
   ref,
-  icon,
+  Icon,
   onChange,
   type = 'text',
   ...rest
@@ -92,7 +91,6 @@ export const InputWithClearText = ({
     if (typeof onChange == 'function') {
       onChange(event);
     }
-    console.log('InputWithClearText.onChange', event.target.value);
     setIsShowClear(!!event.target.value);
   };
 
@@ -113,7 +111,7 @@ export const InputWithClearText = ({
 
   return (
     <Input
-      leftIcon={icon && <Icon filename={icon} />}
+      leftIcon={Icon && Icon}
       type={type}
       placeholder={placeholder || 'Логин'}
       color={color}
@@ -122,12 +120,7 @@ export const InputWithClearText = ({
       {...rest}
       rightIcon={
         isShowClear && (
-          <Icon
-            filename='close'
-            alt='Очистка текста'
-            className='cursor-pointer'
-            onClick={handleClear}
-          />
+          <CloseIcon className='cursor-pointer' onClick={handleClear} />
         )
       }
     />

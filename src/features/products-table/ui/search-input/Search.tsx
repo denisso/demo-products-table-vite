@@ -1,15 +1,20 @@
-import { useFiltersStore } from '@/features/products-table/model';
+import {
+  useProductsQueryState,
+  productsQueryStateApi,
+} from '@/features/products-table/model';
 import { InputWithClearText, type InputPropsShared } from '@/shared/ui';
+import { SearchIcon } from '@/shared/assets/icons';
 
 export const SearchInput = ({ className, ...rest }: InputPropsShared) => {
-  const { setSearch } = useFiltersStore();
+  const filter = useProductsQueryState();
   return (
     <InputWithClearText
-      onChange={(event) => setSearch(event.target.value)}
+      onChange={(event) => productsQueryStateApi.setSearch(event.target.value)}
       className={className}
-      icon={'search'}
+      Icon={<SearchIcon />}
       placeholder='Поиск товара'
       color='neutral'
+      value={filter.search}
       {...rest}
     />
   );

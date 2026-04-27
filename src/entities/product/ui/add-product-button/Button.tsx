@@ -1,18 +1,14 @@
 import React from 'react';
 import { Button, Modal } from '@/shared/ui';
 import { AddProductForm } from '../add-product-form';
-import { Icon } from '@/shared/ui';
+import { PlusIcon } from '@/shared/assets/icons';
 
 export const AddProductButton = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
     <>
-      <Button
-        color='primary'
-        onClick={() => setOpen(true)}
-        icon={<Icon filename='plus' />}
-      >
+      <Button color='primary' onClick={() => setOpen(true)} icon={<PlusIcon />}>
         Добавить товар
       </Button>
       <Modal

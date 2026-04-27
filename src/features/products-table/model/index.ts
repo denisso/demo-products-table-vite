@@ -1,2 +1,2 @@
-export * from './useFiltersStore';
+export * from './useProductsQueryState';
 export * from './useProductsQuery';

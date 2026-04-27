@@ -1,0 +1,10 @@
+export { default as CloseIcon } from './close.svg?react';
+export { default as EyeIcon } from './eye.svg?react';
+export { default as EyeOffIcon } from './eye-off.svg?react';
+export { default as LoginIcon } from './login.svg?react';
+export { default as LogoIcon } from './logo.svg?react';
+export { default as LogoutIcon } from './logout.svg?react';
+export { default as PasswordIcon } from './password.svg?react';
+export { default as PlusIcon } from './plus.svg?react';
+export { default as RefreshIcon } from './refresh.svg?react';
+export { default as SearchIcon } from './search.svg?react';

@@ -1,4 +1,4 @@
-import { useToastStore } from '@/shared/lib';
+import { useToastStore } from '@/shared/lib/toast';
 import { Toast } from './Toast';
 
 export const ToastsContainer = () => {
