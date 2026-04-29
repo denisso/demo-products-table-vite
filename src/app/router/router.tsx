@@ -1,16 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
-import { ProductsPage, LoginPage } from '@/pages';
+import { LazyLoginPage, LazyProductsPage } from '@/app/router/LazyPages';
 
 export const router = createBrowserRouter(
   [
     {
       element: <ProtectedRoute />,
-      children: [{ path: '/login', element: <LoginPage /> }],
+      children: [{ path: '/login', Component: LazyLoginPage }],
     },
     {
       element: <ProtectedRoute />,
-      children: [{ path: '/', element: <ProductsPage /> }],
+      children: [{ path: '/', Component: LazyProductsPage }],
     },
   ],
   { basename: import.meta.env.BASE_URL },

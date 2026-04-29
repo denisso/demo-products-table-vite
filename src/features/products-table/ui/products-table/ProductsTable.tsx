@@ -41,12 +41,12 @@ const columns: TableColumn<Product>[] = [
 export const ProductsTable = ({ className }: { className?: string }) => {
   const filter = useProductsQueryState();
 
-  const productsQuery = useProductsQuery({
+  const products = useProductsQuery({
     ...filter,
     limit: APP_CONFIG.TABLE_PAGE_LIMIT,
   });
 
-  const total = productsQuery.data?.total ?? 0;
+  const total = products.data?.total ?? 0;
 
   const handleSort = (column: string) => {
     if (filter.sortBy === column) {
@@ -67,17 +67,17 @@ export const ProductsTable = ({ className }: { className?: string }) => {
         <progress
           className={clsx(
             'progress progress-primary w-full transition-opacity',
-            productsQuery.isFetching ? 'opacity-100' : 'opacity-0',
+            products.isFetching ? 'opacity-100' : 'opacity-0',
           )}
           aria-label='Загрузка товаров'
         />
       </div>
       <Table
-        data={productsQuery.data?.products ?? []}
+        data={products.data?.products ?? []}
         columns={columns}
         sortBy={filter.sortBy}
         order={filter.order}
-        isLoading={productsQuery.isLoading}
+        isLoading={products.isLoading}
         emptyText='Товары не найдены'
         onSort={handleSort}
       />
