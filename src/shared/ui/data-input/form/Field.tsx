@@ -89,28 +89,29 @@ export function FormField<TFormData extends FieldValues>({
         const labelClass = 'font-medium no-interaction';
 
         return (
-          <div className={className}>
+          <div className={className} data-slot='form-field'>
             {layout === 'vertical' ? (
-              <div className='flex flex-col gap-2'>
-                <label className={labelClass} htmlFor={id}>
+              <div className='flex flex-col gap-2' data-slot='label-wrapper'>
+                <label className={labelClass} htmlFor={id} data-slot='label'>
                   {label}
                 </label>
                 {Input}
               </div>
             ) : (
-              <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-2' data-slot='label-wrapper'>
                 {Input}
                 <label
                   className={clsx(labelClass, { ['text-muted']: isLabelMuted })}
                   htmlFor={id}
+                  data-slot='label'
                 >
                   {label}
                 </label>
               </div>
             )}
-            <div className='h-4'>
+            <div className='h-4' data-slot='error-message-wrapper'>
               {fieldState.error && (
-                <p className='label text-error'>{fieldState.error.message}</p>
+                <p data-slot='error-message' className='label text-error'>{fieldState.error.message}</p>
               )}
             </div>
           </div>

@@ -16,12 +16,13 @@ type Props = {
 export const Toast = ({ toast }: Props) => {
   const colorClass = toast.color ? colorMap[toast.color] : colorMap['info'];
   return (
-    <div className={clsx('alert alert-', colorClass)}>
-      <span>{toast.message}</span>
+    <div className={clsx('alert alert-', colorClass)} data-slot="toast">
+      <span data-slot="message">{toast.message}</span>
 
       <button
         className='btn btn-sm btn-ghost'
         onClick={() => useToastStore.getState().removeToast(toast.id)}
+        data-slot="close-button"
       >
         ✕
       </button>

@@ -46,8 +46,9 @@ export function Modal({ open, onClose, children, className }: ModalProps) {
       className='modal modal-open p-0 bg-black/40'
       onCancel={handleCancel}
       onClick={handleBackdropClick}
+      data-slot='modal'
     >
-      <div className={className}>{children}</div>
+      <div data-slot='modal-content' className={className}>{children}</div>
     </dialog>
   );
 

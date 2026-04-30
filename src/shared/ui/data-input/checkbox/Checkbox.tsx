@@ -22,6 +22,7 @@ export const Checkbox = React.forwardRef<
   return (
     <input
       type='checkbox'
+      data-slot='checkbox'
       className={clsx(
         'checkbox [&::before]:hidden bg-transparent',
         colorClass,

@@ -37,11 +37,12 @@ export const Input = React.forwardRef<
   ) => {
     const colorClass = colorMap[color] || colorMap.neutral;
     return (
-      <div className={clsx('input w-full', colorClass)}>
+      <div className={clsx('input w-full', colorClass)} data-slot='input-wrapper'>
         {leftIcon && (
           <div className='opacity-30 w-(--width-ctrl-icon)'>{leftIcon}</div>
         )}
         <input
+          data-slot='input'
           type={type}
           className={clsx('grow', className)}
           placeholder={placeholder}
