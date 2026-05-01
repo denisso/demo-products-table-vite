@@ -9,6 +9,7 @@ const chunkGroups: Record<string, RegExp[]> = {
   second: [
     /node_modules\/zustand\//,
     /node_modules\/@tanstack\/react-query\//,
+    /node_modules\/@tanstack\/react-table\//,
     /node_modules\/react-router\//,
     /node_modules\/react-router-dom\//,
     /node_modules\/react-hook-form\//,
